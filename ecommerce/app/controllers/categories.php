@@ -7,7 +7,14 @@
  */
 class Categories extends Controller{
 
+    protected $product;
+
     public function shields($name = ''){
+
+        $this->product = $this->model('Product');
+        $product = $this->product;
+
+      echo $product->selectAll();
 
 
 

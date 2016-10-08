@@ -37,7 +37,7 @@ class User extends Model{
     
     public function create($fields = array()){
         if(!$this->_db->insert('users',$fields)){
-
+                
             throw new Exception('There was a problem creating account');
         }
     }
@@ -65,6 +65,9 @@ class User extends Model{
             if ($user) {
                 if (($this->data()->password === Hash::make($password, $this->data()->salt)) or ($this->data()->temp_password === $password)) {
                     Session::put($this->_sessionName, $this->data()->id);
+                    if($this->hasPermission('admin')){
+                        Session::put('admin','administrator');
+                    }
                     if ($remember) {
                         $hash = Hash::unique();
                         $hashCheck = $this->_db->get('user_sessions', array('user_id', '=', $this->data()->id));
@@ -91,10 +94,15 @@ class User extends Model{
         if(!$id and $this->isLoggedIn()){
             $id=$this->data()->id;
         }
-
+        
         if(!$this->_db->update('users',$id,$fields)){
             throw new Exception('There was a problem updating.');
         }
+    }
+
+    public function userIdFromEmail($username){
+        $this->_db->action('SELECT id','users',array('username','=',$username));
+        return $this->_db->first()->id;
     }
 
     public function hasPermission($key){
@@ -105,10 +113,24 @@ class User extends Model{
 
             if($permissions[$key]==true) {
                 return true;
+
             }
         }
         return false;
     }
+    
+    public function userExists($username){
+        $result = $this->_db->get('users',array('username','=',$username));
+
+        if($result->count()){
+           
+                return true;
+            
+        }
+        return false;
+    }
+        
+    
 
     public function exists(){
         return(!empty($this->_data)) ?true : false;
@@ -122,6 +144,8 @@ class User extends Model{
         $this->_db->delete('user_sessions',array('user_id','=',$this->data()->id));
 
         Session::delete($this->_sessionName);
+        Session::delete('username');
+        Session::delete('admin');
         Cookie::delete($this->_cookieName);
     }
 

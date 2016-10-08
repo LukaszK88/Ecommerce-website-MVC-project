@@ -5,11 +5,10 @@
  * Date: 04/10/2016
  * Time: 18:57
  */?>
-<div class="container">
-
+<div class="container-fluid">
     <div class="row">
 <div class="col-md-2 text-center">
-    <strong><h3>Forge of gypsy</h3></strong>
+    <strong><font color="#8b0000" ><h2>Forge of Gypsy</h2></font></strong>
     <div class="btn-group-vertical btn-group-lg" role="group" aria-label="...">
         <a href="<?php echo Url::path(); ?>/categories/shields" type="button" class="btn btn-default">Shields</a>
         <div class="btn-group" role="group">

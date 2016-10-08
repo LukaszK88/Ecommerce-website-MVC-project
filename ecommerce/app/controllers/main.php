@@ -62,7 +62,7 @@ class Main extends Controller{
                         Session::put('username',$user->data()->username);
                         if ($user->data()->temp_password === Hash::md5(Input::get('username'))) {
                             Message::setMessage('You have logged in for the first time, change your password','success') ;
-                            Redirect::to(Url::path().'/main/index');
+                            Redirect::to(Url::path().'/main/settings');
 
                         } else {
                             Session::flash('success', 'You are logged in!');
@@ -161,7 +161,7 @@ class Main extends Controller{
                             ));
 
                             Message::setMessage('You have updated your details!','success' );
-                            Redirect::to('index.php');
+                            Redirect::to(Url::path().'/main/index');
 
                         } catch (Exception $e) {
                             die($e->getMessage());
@@ -177,6 +177,59 @@ class Main extends Controller{
         $this->view('main/settings',['temp_password'=>$user->data()->temp_password]);
     }
 
+    public function recovery( $name = ''){
+        $user = $this->user;
+        if(Input::exists()) {
+            if (Token::check(Input::get('token'))) {
+
+                $validate = new Validation();
+                $validation = $validate->check($_POST,array(
+                    'username'=> array(
+                        'required'=>true,
+                    )
+                ));
+
+                if($validation->passed()) {
+                    $username =Input::get('username');
+
+                    if($user->userExists($username)) {
+
+                        if ($name == ('username')) {
+                           // email(Input::get('username'), 'Your username reminder', $user->data()->username);
+                            Message::setMessage('Username has been sent, check your inbox!','success');
+                            Redirect::to(Url::path().'/main/login');
+                        } else if ($name == ('password')) {
+                            $id = $user->userIdFromEmail($username);
+                            $user->update(array(
+                                'temp_password'=>Hash::md5($username),
+                                'password'     => ''
+                            ),$id);
+                           // email(Input::get('username'), 'Your password reminder', Hash::md5($username));
+                            Message::setMessage('Password has been sent, check your inbox!','success');
+                            Redirect::to(Url::path().'/main/login');
+                        } else {
+                            Redirect::to(Url::path().'/main/index');
+                        }
+                    }else{
+                        Message::setMessage('This email address doesn\'t exist in our database, register please','error');
+                    }
+                }
+
+            }
+        }
+
+        
+
+        $this->view('main/recovery');
+    }
+
+    public function admin($name = ''){
+        
+
+        $this->view('main/admin');
+    }
+
+
     public function logout($name = ''){
         $user = $this->user;
         $user->logout();
@@ -184,5 +237,7 @@ class Main extends Controller{
 
         $this->view('main/logout');
     }
+
+
 
 }

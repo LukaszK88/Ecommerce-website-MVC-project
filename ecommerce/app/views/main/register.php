@@ -6,7 +6,7 @@
  * Time: 20:35
  */?>
 
-    <div class="col-md-10 text-center">
+    <div class="col-md-9 text-center">
         <form action="" method="POST">
             <div class="form-group">
                 <?php Validation::displayErrors(); ?>

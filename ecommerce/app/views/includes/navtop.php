@@ -49,6 +49,12 @@
                         <li>
                             <a href="<?php echo Url::path() ?>/main/settings"><i class="fa fa-fw fa-gear"></i> Settings</a>
                         </li>
+                        <?php if(Session::exists('admin')) : ?>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="<?php echo Url::path() ?>/main/admin"><i class="fa fa-fw fa-power-off"></i> Admin</a>
+                        </li>
+                        <?php endif ;?>
                         <li class="divider"></li>
                         <li>
                             <a href="<?php echo Url::path() ?>/main/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
