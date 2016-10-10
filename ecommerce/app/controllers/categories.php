@@ -7,24 +7,22 @@
  */
 class Categories extends Controller{
 
-    protected $product;
-
+    protected $products,
+                $productList;
     public function shields($name = ''){
 
-        $this->product = $this->model('Product');
-        $product = $this->product;
+        $this->products = $this->model('Products');
+        $products = $this->products;
+        
+        $this->productList = $products->selectProducts();
 
-      echo $product->selectAll();
-
-
-
-        $this->view('categories/shields');
+        $this->view('categories/shields',['product'=>$this->productList]);
     }
-    public function kaka($name = ''){
+    public function index($name = ''){
 
 
 
-        $this->view('categories/kaka');
+        $this->view('categories/index');
     }
 
 }
