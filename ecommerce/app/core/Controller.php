@@ -24,6 +24,9 @@ class Controller{
             require_once config::get('default/foot_file');
         }
         else {
+            require_once '../app/basket/Basket.php';
+            $basket = new Basket();
+
             require_once config::get('default/header_file');
             require_once config::get('default/navbar_top');
             require_once config::get('default/navbar_side');

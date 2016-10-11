@@ -8,7 +8,8 @@
 class Products extends Model{
 
     public $_db,
-            $stock;
+            $stock,
+            $data;
 
 
     public function __construct(){
@@ -19,8 +20,13 @@ class Products extends Model{
 
     
     public function selectProducts(){
-    $products = $this->_db->get('products',array('id','>',0));
-    return $products->results();
+        $products = $this->_db->get('products',array('id','>',0));
+        return $products->results();
+    }
+
+    public function findProducts($value){
+      $result = $this->_db->find('products',$value);
+        return $result;
     }
 
     public function compareSlug($slug){
@@ -28,10 +34,15 @@ class Products extends Model{
         $result = $this->_db->get('products',array('slug','=',$slug));
          if($result->count()){
              $this->stock = $result->first()->stock;
+             $this->data  = $result->first();
              return $result->first();
 
          }
         return false;
+    }
+    
+    public function data(){
+        return $this->data;
     }
 
     public function hasLowStock(){

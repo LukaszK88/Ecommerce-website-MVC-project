@@ -15,11 +15,9 @@ class Main extends Controller{
     }
 
     public function index($name = ''){
-
-        $user = $this->user;
-
-
+        
         $this->view('main/index');
+
     }
 
     public function register($name = ''){

@@ -70,6 +70,24 @@ class Database extends PDO {
 
     }
 
+    public function find($table, $value){
+       // $value = [];
+        foreach ($value as $item)
+        {
+            $new_elements[] = "id = ".$item;
+        }
+           
+        $value = implode(' OR ', $new_elements);
+
+
+        $sql= "SELECT * FROM ".$table." WHERE ".$value."";
+        $results = $this->_pdo->query($sql);
+        $rows = $results->fetchAll(PDO::FETCH_OBJ);
+        
+        return $rows;
+    }
+    
+    
     public function select($table, $where){
         return $this->action('SELECT *', $table, $where);
     }

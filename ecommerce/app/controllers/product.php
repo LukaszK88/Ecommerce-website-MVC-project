@@ -9,10 +9,12 @@ class Product extends Controller{
 
     protected $products;
 
-    public function index($name = ''){
+    public function index($slug = ''){
         $this->products = $this->model('Products');
 
-        $product = $this->products->compareSlug($name);
+        $product = $this->products->compareSlug($slug);
+
+       
        
         
         if(!$product){

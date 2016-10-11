@@ -44,7 +44,7 @@
                             <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                            <a href="<?php echo Url::path() ?>/cart/index"><i class="fa fa-fw fa-cart"></i> Cart (<?php echo $basket->itemCount();?>)</a>
                         </li>
                         <li>
                             <a href="<?php echo Url::path() ?>/main/settings"><i class="fa fa-fw fa-gear"></i> Settings</a>
