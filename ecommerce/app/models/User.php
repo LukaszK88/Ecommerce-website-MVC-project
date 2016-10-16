@@ -7,7 +7,8 @@ class User extends Model{
         $_time,
         $_sessionName,
         $_cookieName,
-        $_isLoggedIn;
+        $_isLoggedIn,
+        $order;
 
 
 
@@ -147,6 +148,14 @@ class User extends Model{
         Session::delete('username');
         Session::delete('admin');
         Cookie::delete($this->_cookieName);
+    }
+
+    public function order(){
+        if($this->order == null) {
+            $this->order = new Orders();
+        }
+        return $this->order;
+
     }
 
     public function isLoggedIn(){

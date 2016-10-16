@@ -14,4 +14,7 @@ class Hash{
         return md5($string);
 
     }
+    public static function bytes($number){
+        return  bin2hex(random_bytes($number));
+    }
 }

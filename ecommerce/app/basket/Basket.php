@@ -84,16 +84,16 @@ class Basket{
         }
 
         $products = $this->product->findProducts($ids);
+            if($products) {
+                foreach ($products as $product) {
 
-        foreach ($products as $product){
+                    $product->quantity = $this->get($product)['quantity'];
+                    $items[] = $product;
+                }
 
-            $product->quantity = $this->get($product)['quantity'];
-            $items[] = $product;
-        }
-        
-        return $items;
+                return $items;
 
-
+            }
     }
 
     public function itemCount(){
@@ -120,14 +120,16 @@ class Basket{
 
     public function refresh(){
 
-        foreach ($this->all() as $item) {
+        if($this->itemCount()>0) {
+            foreach ($this->all() as $item) {
 
-            if ($item->stock <= ($item->quantity)) {
+                if ($item->stock <= ($item->quantity)) {
 
-                $this->update($item,$item->stock);
-            }elseif ($item->stock >= 1 && $item->quantity == 0){
+                    $this->update($item, $item->stock);
+                } elseif ($item->stock >= 1 && $item->quantity == 0) {
 
-                $this->update($item,1);
+                    $this->update($item, 1);
+                }
             }
         }
     }

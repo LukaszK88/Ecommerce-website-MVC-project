@@ -75,7 +75,7 @@ class Validation{
 
     public static function displayErrors(){
         if(!empty(self::errors())) {
-            echo '<div class="alert alert-danger">';
+            echo '<div class="alert alert-danger text-center">';
             foreach (self::errors() as $error) {
                 echo $error . '<br>';
             }

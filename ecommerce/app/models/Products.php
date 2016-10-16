@@ -7,8 +7,9 @@
  */
 class Products extends Model{
 
-    public $_db,
+    public  $_db,
             $stock,
+            $order,
             $data;
 
 
@@ -25,8 +26,10 @@ class Products extends Model{
     }
 
     public function findProducts($value){
-      $result = $this->_db->find('products',$value);
-        return $result;
+      if(!empty($value)) {
+          $result = $this->_db->find('products', $value);
+          return $result;
+      }
     }
 
     public function compareSlug($slug){
@@ -66,6 +69,14 @@ class Products extends Model{
     public function hasStock($quantity){
 
         return $this->stock >= $quantity;
+
+    }
+
+    public function order(){
+        if($this->order == null) {
+            $this->order = new Order();
+        }
+        return $this->order;
 
     }
 }

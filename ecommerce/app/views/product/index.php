@@ -25,7 +25,7 @@
             </h4>
 
             <p><?php echo $data['product']->description ?></p>
-            <a href="<?php echo Url::path() ?>/cart/add/<?php echo $data['product']->slug?>/2" class="btn btn-default btn-sm">Add to cart</a>
+            <a href="<?php echo Url::path() ?>/cart/add/<?php echo $data['product']->slug?>/1" class="btn btn-default btn-sm">Add to cart</a>
         </div>
         <div class="ratings">
             <p class="pull-right">3 reviews</p>

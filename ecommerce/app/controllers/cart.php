@@ -18,6 +18,7 @@ class Cart extends Controller{
 
     public function index($name = ''){
 
+
         $this->basket->refresh();
 
         $this->view('cart/index');
@@ -39,6 +40,22 @@ class Cart extends Controller{
 
 
          $this->view('cart/add');
+    }
+
+    public function update($slug = ''){
+
+        $product = $this->products->compareSlug($slug);
+
+        if(!$product){
+            Redirect::to(Url::path().'/main/index');
+        }else{
+
+            $this->basket->update($product,$_POST['quantity']);
+        }
+
+            Redirect::to(Url::path().'/cart/index');
+
+        $this->view('cart/update');
     }
 
 }
