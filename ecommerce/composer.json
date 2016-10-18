@@ -1,0 +1,10 @@
+{
+    "require": {
+        "braintree/braintree_php": "^3.17"
+    },
+    "autoload":{
+        "psr-4":{
+            "ecommerce\\": "app"
+        }
+    }
+}

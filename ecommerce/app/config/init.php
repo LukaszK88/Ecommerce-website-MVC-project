@@ -37,3 +37,4 @@ $GLOBALS['config'] = array(
         'enable_php_errors'     => true,                   // same as in php.ini but using ini_set()
     )
 );
+

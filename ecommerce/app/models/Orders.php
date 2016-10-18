@@ -9,6 +9,7 @@ class Orders extends Model{
 
     public $_db,
             $address,
+            $_data,
             $products;
 
 
@@ -23,6 +24,31 @@ class Orders extends Model{
 
             throw new Exception('There was a problem setting up your order');
         }
+    }
+
+    public function createOrder($fields = array()){
+        if(!$this->_db->insert('orders_products',$fields)){
+
+            throw new Exception('There was a problem putting your order together');
+        }
+    }
+
+
+
+    public function selectLastOrder(){
+        $addresses = $this->_db->get('orders',array('id','>',0));
+        if($addresses->count()){
+
+            $result = $addresses->results();
+            $this->_data = end($result);
+
+            return true;
+        }
+    }
+
+    public function data(){
+
+        return $this->_data;
     }
 
 

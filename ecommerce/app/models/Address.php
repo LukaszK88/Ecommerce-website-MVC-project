@@ -27,6 +27,22 @@ class Address extends Model{
             throw new Exception('There was a problem updating address');
         }
     }
+
+    public function selectLastAddress(){
+        $addresses = $this->_db->get('addresses',array('id','>',0));
+        if($addresses->count()){
+            
+            $result = $addresses->results();
+            $this->_data = end($result);
+
+            return true;
+        }
+    }
+    
+    public function data(){
+        
+        return $this->_data;
+    }
     
     public function user(){
         if($this->user == null) {

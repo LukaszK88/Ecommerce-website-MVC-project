@@ -5,30 +5,40 @@
  * Date: 11/10/2016
  * Time: 15:49
  */
+
+
 class Order extends Controller{
 
-    protected $basket,
+    protected   $basket,
                 $user,
-               // $order,
+                $order,
+                $product,
+                $item,
                 $address;
 
     public function __construct(){
 
-        $this->basket = new Basket();
-        $this->user = $this->model('User');
-        $this->address = $this->model('Address');
-          $this->model('Orders');
+        $this->basket   = new Basket();
+        $this->product  = $this->model('Products');
+        $this->user     = $this->model('User');
+        $this->address  = $this->model('Address');
+        $this->order    = $this->model('Orders');
 
 
     }
 
     public function index($name = ''){
 
+
         $this->basket->refresh();
 
         if(!$this->basket->subTotal()){
             Redirect::to(Url::path().'/main/index');
         }
+
+        /*if(!Input::get('payment_method_nonce')){
+            Redirect::to(Url::path().'/order/index');
+        }*/
 
         if (Input::exists()) {
             if (Token::check(Input::get('token'))) {
@@ -77,6 +87,10 @@ class Order extends Controller{
                             'role' => 1
                         ));
 
+                        $login = $this->user->login(Input::get('username'), Hash::md5(Input::get('username')));
+                        if ($login) {
+                            Session::put('username', $this->user->data()->username);
+                        }
 
                         //email(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
 
@@ -98,12 +112,15 @@ class Order extends Controller{
                         die($e->getMessage());
                     }
 
+                    $this->address->selectLastAddress();
+
                     try {
                         $this->user->order()->create(array(
                             'hash' => $hash,
                             'paid' => false,
                             'total'=> $this->basket->subTotal(),
-                            'address_id' => $this->address->id
+                            'customer_id' => $this->user->data()->id,
+                            'address_id' => $this->address->data()->id
 
                         ));
 
@@ -113,11 +130,44 @@ class Order extends Controller{
                         die($e->getMessage());
                     }
 
+                    $this->order->selectLastOrder();
+                   
+                    try {
+                        foreach ($this->basket->all() as $item){
+
+                            $this->order->createOrder(array(
+                                'product_id' => $item->id,
+                                'order_id'   => $this->order->data()->id,
+                                'quantity'   => $item->quantity,
+
+                            ));
+
+                        }
+
+
+                    } catch (Exception $e) {
+                        die($e->getMessage());
+                    }
+
+                   $result = Braintree\Transaction::sale([
+                       'amount' => $this->basket->subTotal(),
+                       'paymentMethodNonce' => Input::get('payment_method_nonce'),
+                       'options' =>[
+                           'submitForSettlement' => true
+                       ]
+
+                   ]);
+
+                    $event = new \ecommerce\app\events\OrderWasCreated();
+                    $event->attach([
+                        new EmptyBasket()
+                    ]);
                 }
 
             }
+
         }
-       
+        
         $this->view('order/index');
     }
 

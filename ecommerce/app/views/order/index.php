@@ -47,6 +47,10 @@
 
                 </div>
             </div>
+            <h3>Payments</h3>
+            <hr>
+                <div id="payment">
+                </div>
         </div>
         <div class="col-md-4">
             <div class="well">

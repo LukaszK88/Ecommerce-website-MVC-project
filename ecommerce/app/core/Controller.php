@@ -18,10 +18,7 @@ class Controller{
         if(!file_exists('../app/views/' .$view. '.php')){
             Errors::addError(Errors::errorMsg('1',array($view)));
         }elseif ($dontIncludeFile==true){
-            
-            require_once config::get('default/header_file');
             require_once '../app/views/' . $view . '.php';
-            require_once config::get('default/foot_file');
         }
         else {
             require_once '../app/basket/Basket.php';
