@@ -18,11 +18,18 @@ class Products extends Model{
         $this->_db = Database::getInstance();
     }
 
-
+    public function update($id,$idValue,$currentStock,$quantity){
+        $this->_db->updateById('products',$id,$idValue,array('stock'=> $currentStock - $quantity));
+    }
     
     public function selectProducts(){
         $products = $this->_db->get('products',array('id','>',0));
         return $products->results();
+    }
+
+    public function joinProducts($order_id){
+        $products = $this->_db->joinProducts($order_id);
+        return $products;
     }
 
     public function findProducts($value){

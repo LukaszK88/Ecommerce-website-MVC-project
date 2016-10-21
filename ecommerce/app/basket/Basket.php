@@ -40,7 +40,7 @@ class Basket{
     public function update($product,$quantity){
 
         if(!$this->product->hasStock($quantity)){
-            Message::setMessage('You have exedded maximum quantity','error');
+           // Message::setMessage('You have exedded maximum quantity','error');
         }
 
         if($quantity == 0){

@@ -6,12 +6,13 @@
  * Time: 17:10
  */
 
-namespace ecommerce\app\events;
+
+require_once '../app/handlers/contracts/Handler.php';
 
 class Event{
 
     protected $handlers = [];
-
+    
     public function attach($handlers){
 
         if(is_array($handlers)){
@@ -21,6 +22,7 @@ class Event{
 
                 }
                 $this->handlers[] = $handler;
+
             }
             return;
         }
@@ -29,6 +31,7 @@ class Event{
         }
 
         $this->handlers[] = $handlers;
+        
     }
 
     public function dispatch(){
@@ -39,9 +42,17 @@ class Event{
 
     }
 
-    public function load($event){
-        require_once '../app/models/' . $event . '.php';
-        return new $event;
+    public function loadEvent($event){
+        require_once '../app/events/' . $event . '.php';
+        return;
         
     }
+
+    public function loadHandler($handler){
+        require_once '../app/handlers/' . $handler . '.php';
+        return new $handler;
+
+    }
+
+  
 }

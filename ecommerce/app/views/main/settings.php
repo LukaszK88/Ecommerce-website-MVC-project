@@ -5,7 +5,9 @@
  * Date: 06/10/2016
  * Time: 19:50
  */?>
-        <div class="col-lg-9">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4 text-center well">
             <div class="text-center m-t-lg">
                     <?php
                     Message::displayMessage();
@@ -30,9 +32,10 @@
                         </div>
 
                         <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-                        <button type="submit" name="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" name="submit" class="btn btn-default">Update</button>
                     </form>
                 
             </div>
         </div>
-
+    </div>
+</div>

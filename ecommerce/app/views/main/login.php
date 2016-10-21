@@ -5,8 +5,9 @@
  * Date: 04/10/2016
  * Time: 20:35
  */?>
-
-    <div class="col-lg-9 text-center">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4 text-center well">
         <?php
         Validation::displayErrors();
         Message::displayMessage();
@@ -27,10 +28,12 @@
                     <input type="checkbox" id="remember" name="remember">
                 </div>
                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-                <button type="submit" name="submit" class="btn btn-primary">Log in</button><br><br>
+                <button type="submit" name="submit" class="btn btn-default">Log in</button><br><br>
                 Forgot your <a href="<?php echo Url::path() ?>/main/recovery/username">username</a> or <a href="<?php echo Url::path() ?>/main/recovery/password">password</a>?
             </form>
 
         </div>
+        </div>
     </div>
+</div>
 

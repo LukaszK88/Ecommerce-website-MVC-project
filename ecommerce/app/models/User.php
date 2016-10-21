@@ -146,6 +146,7 @@ class User extends Model{
 
         Session::delete($this->_sessionName);
         Session::delete('username');
+        Session::delete('default');
         Session::delete('admin');
         Cookie::delete($this->_cookieName);
     }

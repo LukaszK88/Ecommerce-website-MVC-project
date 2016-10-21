@@ -5,8 +5,9 @@
  * Date: 04/10/2016
  * Time: 20:35
  */?>
-
-    <div class="col-md-9 text-center">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4 text-center well">
         <form action="" method="POST">
             <div class="form-group">
                 <?php Validation::displayErrors(); ?>
@@ -17,4 +18,6 @@
             <button type="submit" name="submit" class="btn btn-default">Register</button><br><br>
             <p>*- Required fields</p>
         </form>
+        </div>
     </div>
+</div>

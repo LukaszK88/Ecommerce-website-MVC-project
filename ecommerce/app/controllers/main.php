@@ -15,7 +15,6 @@ class Main extends Controller{
     }
 
     public function index($name = ''){
-
         
         $this->view('main/index');
 

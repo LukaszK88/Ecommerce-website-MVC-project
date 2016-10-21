@@ -1,7 +1,8 @@
 <!-- Page Content -->
+<div class="container">
+    <div class="row">
 
-
-        <div class="col-md-9 text-center ">
+        <div class="col-md-12 text-center ">
             <?php Message::displayMessage();?>
             <div class="jumbotron">
                 <p class="lead">"Si vis pacem, para bellum"<br>
@@ -12,10 +13,8 @@
 
         </div>
     <div class="row">
-        <div class="col-md-2">
 
-        </div>
-        <div class="col-md-9 text-center">
+        <div class="col-md-12 text-center">
 
             <div class="row carousel-holder">
 

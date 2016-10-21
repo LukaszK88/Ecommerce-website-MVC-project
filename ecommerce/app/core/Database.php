@@ -92,9 +92,30 @@ class Database extends PDO {
         }
     }
     
+    public function joinProducts($order_id){
+
+        $sql= "SELECT orders_products.*, products.*
+        FROM orders_products
+        INNER JOIN products
+        ON orders_products.order_id={$order_id} AND products.id=orders_products.product_id";
+
+        $results = $this->_pdo->query($sql);
+        $rows = $results->fetchAll(PDO::FETCH_OBJ);
+        $num_rows = count($rows);
+
+        if($num_rows>=1) {
+            return $rows;
+        }
+        
+    }
+    
     
     public function select($table, $where){
         return $this->action('SELECT *', $table, $where);
+    }
+
+    public function selectColumn($column,$table, $where){
+        return $this->action('SELECT '.$column.'', $table, $where);
     }
 
     public function delete($table, $where){
@@ -139,6 +160,26 @@ class Database extends PDO {
         }
 
         $sql="UPDATE {$table} SET {$set} WHERE id = {$id}";
+
+        if(!$this->query($sql, $fields)->error()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function updateById($table,$id,$idValue,$fields){
+        $set = '';
+        $x = 1;
+
+        foreach ($fields as $name => $value) {
+            $set .= "{$name} = ?";
+            if ($x < count($fields)) {
+                $set .= ', ';
+            }
+            $x++;
+        }
+
+        $sql="UPDATE {$table} SET {$set} WHERE {$id} = {$idValue}";
 
         if(!$this->query($sql, $fields)->error()) {
             return true;

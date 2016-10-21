@@ -12,7 +12,7 @@
     </tr>
     <tr>
         <td>Shipping</td>
-        <td>£500</td>
+        <td>£5</td>
     </tr>
     <tr>
         <td class="success">Total</td>

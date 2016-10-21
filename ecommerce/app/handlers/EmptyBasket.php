@@ -9,7 +9,8 @@ class EmptyBasket implements Handler{
 
     public function handle($event)
     {
-        die('empty basket');
+        
+        $event->basket->clear();
     }
 
 }

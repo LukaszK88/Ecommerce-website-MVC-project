@@ -6,6 +6,7 @@
  * Time: 15:49
  */
 
+require_once '../app/events/Event.php';
 
 class Order extends Controller{
 
@@ -23,6 +24,9 @@ class Order extends Controller{
         $this->user     = $this->model('User');
         $this->address  = $this->model('Address');
         $this->order    = $this->model('Orders');
+        $this->model('Payment');
+
+
 
 
     }
@@ -39,7 +43,7 @@ class Order extends Controller{
         /*if(!Input::get('payment_method_nonce')){
             Redirect::to(Url::path().'/order/index');
         }*/
-
+        
         if (Input::exists()) {
             if (Token::check(Input::get('token'))) {
                 $validate = new Validation();
@@ -131,7 +135,7 @@ class Order extends Controller{
                     }
 
                     $this->order->selectLastOrder();
-                   
+
                     try {
                         foreach ($this->basket->all() as $item){
 
@@ -158,10 +162,29 @@ class Order extends Controller{
 
                    ]);
 
-                    $event = new \ecommerce\app\events\OrderWasCreated();
+                    $events= new Event;
+                    $events->loadEvent('OrderWasCreated');
+                    $event = new OrderWasCreated($this->order,$this->basket,$result);
+
+                    if(!$result->success){
+                        $event->attach($events->loadHandler('RecordFailedPayment'));
+                        $event->dispatch();
+                        
+                         Redirect::to(Url::path().'/order/index');
+                    }
+
+
                     $event->attach([
-                        new EmptyBasket()
+                        $events->loadHandler('MarkOrderPaid'),
+                        $events->loadHandler('RecordSuccessfulPayment'),
+                        $events->loadHandler('UpdateStock'),
+                        $events->loadHandler('EmptyBasket')
                     ]);
+
+                    $event->dispatch();
+
+                    Redirect::to(Url::path().'/order/show/'.$hash);
+
                 }
 
             }
@@ -169,6 +192,33 @@ class Order extends Controller{
         }
         
         $this->view('order/index');
+    }
+    
+    public function show($hash = ''){
+
+        $this->order->selectLastOrder();
+        $this->address->selectLastAddress();
+
+        $orderHash = $this->order->data()->hash;
+
+
+        if($hash != $orderHash){
+            Redirect::to(Url::path().'/main/index');
+        }
+        
+        $address = $this->address->data();
+        $orderId = $this->order->data()->id;
+        $products = $this->order->select($orderId);
+
+        foreach ($products as $product){
+
+        }
+        $productsArray[] = $this->product->joinProducts($product->product_id);
+        foreach ($productsArray as $product){
+            $this->item = $product;
+        }
+
+        $this->view('order/show',['address' => $address,'product' => $this->item,'order' =>$this->order->data()]);
     }
 
    }

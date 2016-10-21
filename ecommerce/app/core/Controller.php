@@ -26,7 +26,6 @@ class Controller{
 
             require_once config::get('default/header_file');
             require_once config::get('default/navbar_top');
-            require_once config::get('default/navbar_side');
             require_once '../app/views/' . $view . '.php';
             require_once config::get('default/footer_file');
             require_once config::get('default/foot_file');

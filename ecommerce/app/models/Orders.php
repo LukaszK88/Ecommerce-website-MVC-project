@@ -10,6 +10,7 @@ class Orders extends Model{
     public $_db,
             $address,
             $_data,
+            $payment,
             $products;
 
 
@@ -18,7 +19,13 @@ class Orders extends Model{
         parent::__construct();
         $this->_db = Database::getInstance();
     }
+    
 
+    public function select($orderId){
+        $result = $this->_db->select('orders_products',array('order_id','=',$orderId));
+        return $result->results();
+    }
+   
     public function create($fields = array()){
         if(!$this->_db->insert('orders',$fields)){
 
@@ -33,13 +40,16 @@ class Orders extends Model{
         }
     }
 
-
+    public function update($id,$fields=[]){
+        $this->_db->update('orders',$id,$fields);
+    }
+    
 
     public function selectLastOrder(){
-        $addresses = $this->_db->get('orders',array('id','>',0));
-        if($addresses->count()){
+        $orders = $this->_db->get('orders',array('id','>',0));
+        if($orders->count()){
 
-            $result = $addresses->results();
+            $result = $orders->results();
             $this->_data = end($result);
 
             return true;
@@ -50,8 +60,7 @@ class Orders extends Model{
 
         return $this->_data;
     }
-
-
+    
     public function products(){
         if($this->products == null) {
             $this->products = new Products();
@@ -65,6 +74,14 @@ class Orders extends Model{
             $this->address = new Address();
         }
         return $this->address;
+
+    }
+
+    public function payment(){
+        if($this->payment == null) {
+            $this->payment = new Payment();
+        }
+        return $this->payment;
 
     }
 }

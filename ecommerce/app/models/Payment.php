@@ -15,4 +15,12 @@ class Payment extends Model{
         parent::__construct();
         $this->_db = Database::getInstance();
     }
+    public function create($fields = array()){
+        $this->_db->insert('payments',$fields);
+    }
+
+    public function update($id,$idValue,$fields = []){
+        $this->_db->updateById('payments',$id,$idValue,$fields);
+    }
 }
+

@@ -14,9 +14,6 @@ class Product extends Controller{
 
         $product = $this->products->compareSlug($slug);
 
-       
-       
-        
         if(!$product){
             Redirect::to(Url::path().'/main/index');
         }
