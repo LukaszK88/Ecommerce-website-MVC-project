@@ -84,7 +84,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo Session::get('username');?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="<?php echo Url::path() ?>/main/profile"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
                             <a href="<?php echo Url::path() ?>/main/settings"><i class="fa fa-fw fa-gear"></i> Settings</a>

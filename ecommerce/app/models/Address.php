@@ -9,8 +9,10 @@
 class Address extends Model{
 
     public $_db,
-            $_data,
+            $data,
+            $lastEnteredData,
             $user,
+            $count,
             $order;
         
 
@@ -21,7 +23,7 @@ class Address extends Model{
 
     }
 
-    public function create($fields = array()){
+    public function create($fields = []){
         if(!$this->_db->insert('addresses',$fields)){
 
             throw new Exception('There was a problem updating address');
@@ -33,15 +35,62 @@ class Address extends Model{
         if($addresses->count()){
             
             $result = $addresses->results();
-            $this->_data = end($result);
+            $this->lastEnteredData = end($result);
 
             return true;
         }
     }
     
-    public function data(){
+    public function selectUserAddress(){
+        $addresses = $this->_db->get('addresses',array('customer_id','=',$this->user()->data()->id));
+        if($addresses->count()){
+            $this->count = $addresses->count();
+            $this->data = $addresses->results();
+
+            return true;
+        }
+    }
+
+    public function selectUserAddressByIdAndAddress($address1){
+        $addresses = $this->_db->selectMultipleConditions('addresses','address1',$address1,'customer_id',$this->user()->data()->id);
         
-        return $this->_data;
+            return $addresses;
+        
+    }
+
+    public function userAndAddressExists(){
+        if($this->user()->isLoggedIn() and ($this->selectUserAddress()==true)){
+            return true;
+        }
+    }
+    
+    public function deleteAddress($address){
+        $this->_db->delete('addresses',array('id','=',$address));
+    }
+
+    public function count(){
+
+        return $this->count;
+    }
+
+    public function data(){
+
+        return $this->data;
+    }
+    
+    public function lastEnteredData(){
+        
+        return $this->lastEnteredData;
+    }
+
+
+    public function set($name,$value){
+        $this->{$name} = $value;
+    }
+
+    public function get($var){
+        return $this->{$var};
+
     }
     
     public function user(){

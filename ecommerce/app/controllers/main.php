@@ -8,10 +8,12 @@
 
 class Main extends Controller{
 
-    protected $user;
+    protected   $user,
+                $address = '';
 
     public function __construct(){
         $this->user = $this->model('User');
+        $this->address = $this->model('Address');
     }
 
     public function index($name = ''){
@@ -234,6 +236,61 @@ class Main extends Controller{
         Redirect::to(Url::path().'/main/index');
 
         $this->view('main/logout');
+    }
+
+    public function profile($name = ''){
+        
+        $this->address->selectUserAddress();
+        if(Input::exists()){
+            if(isset($_POST['delete'])) {
+                $this->address->deleteAddress($_POST['delete']);
+                Redirect::to(Url::path().'/main/profile');
+            }elseif (isset($_POST['add'])) {
+                $validate = new Validation();
+                $validation = $validate->check($_POST, array(
+                    'address1' => array(
+                        //'unique' => 'addresses',
+                        'required' => true,
+                        'min' => 10,
+                        'max' => 150,
+                    ),
+                    'city' => array(
+                        'required' => true,
+                        'min' => 4,
+                        'max' => 50,
+                    ),
+                    'post_code' => array(
+                        'required' => true,
+                        'min' => 3,
+                        'max' => 10,
+                    )
+                ));
+                if ($validation->passed()) {
+
+                    try {
+                        $this->address->create(array(
+                            'address1' => Input::get('address1'),
+                            'address2' => Input::get('address2'),
+                            'city' => Input::get('city'),
+                            'post_code' => Input::get('post_code'),
+                            'customer_id' => $this->user->data()->id
+
+                        ));
+
+                        Redirect::to(Url::path().'/main/profile');
+
+                    } catch (Exception $e) {
+                        die($e->getMessage());
+                    }
+                }
+
+            }
+
+        }
+       
+
+
+        $this->view('main/profile',['user'=>$this->user->data(),'addresses'=>$this->address->data()]);
     }
 
 
