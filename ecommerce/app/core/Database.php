@@ -109,6 +109,23 @@ class Database extends PDO {
         
     }
 
+    public function joinUsersAndReviews(){
+
+        $sql= "SELECT users.*, products_reviews.*
+        FROM users
+        INNER JOIN products_reviews
+        ON users.id = products_reviews.customer_id AND products_reviews.id >= 0";
+
+        $results = $this->_pdo->query($sql);
+        $rows = $results->fetchAll(PDO::FETCH_OBJ);
+        $num_rows = count($rows);
+
+        if($num_rows>=1) {
+            return $rows;
+        }
+
+    }
+
     public function selectMultipleConditions($table,$column1,$value1,$column2,$value2){
         $sql = "SELECT * FROM {$table} WHERE {$column1} = '$value1' AND {$column2} = {$value2}";
        

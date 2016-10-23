@@ -13,7 +13,14 @@
     });
 </script>
 <!-- Bootstrap Core JavaScript -->
+<script src="<?php echo Url::path()?>/js/bootstrap-slider.min.js"></script>
+<script src="<?php echo Url::path()?>/js/bootstrap-slider.js"></script>
 <script src="<?php echo Url::path()?>/js/bootstrap.min.js"></script>
+<script>$('.ex1').slider({
+        formatter: function(value) {
+            return 'Current value: ' + value;
+        }
+    });</script>
 
 </body>
 

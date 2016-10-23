@@ -16,6 +16,7 @@
     <link href="<?php echo Url::path()?>/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
+    <link href="<?php echo Url::path()?>/css/bootstrap-slider.min.css" rel="stylesheet">
     <link href="<?php echo Url::path()?>/css/full.css" rel="stylesheet">
     <link href="<?php echo Url::path()?>/css/shop-homepage.css" rel="stylesheet">
 

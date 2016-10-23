@@ -3513,6 +3513,7 @@ tbody.collapse.in {
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
 }
+
 .dropup,
 .dropdown {
   position: relative;
@@ -6757,4 +6758,6 @@ button.close {
     display: none !important;
   }
 }
+
+
 /*# sourceMappingURL=bootstrap.css.map */

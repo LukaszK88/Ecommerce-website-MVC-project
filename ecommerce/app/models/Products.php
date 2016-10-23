@@ -50,6 +50,18 @@ class Products extends Model{
          }
         return false;
     }
+
+    public function selectReviews(){
+        $products = $this->_db->joinUsersAndReviews();
+        return $products;
+    }
+
+    public function insertReview($fields){
+        if(!$this->_db->insert('products_reviews',$fields)){
+
+            throw new Exception('There was a problem with your review');
+        }
+    }
     
     public function data(){
         return $this->data;

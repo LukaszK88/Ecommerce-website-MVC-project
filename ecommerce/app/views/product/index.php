@@ -7,11 +7,11 @@
  */?>
 <div class="container">
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <img class="img-responsive" src="<?php echo $data['product']->image ?>" alt="">
         </div>
-        <div class="col-md-8">
-
+        <div class="col-md-6">
+            <?php Message::displayMessage();?>
             <div class="thumbnail">
                 <div class="caption-full">
                     <?php if($data['products']->outOfStock()) :?>
@@ -44,53 +44,37 @@
             <div class="well">
 
                 <div class="text-right">
-                    <a class="btn btn-success">Leave a Review</a>
+                    <a href="<?php echo Url::path() ?>/product/review/<?php echo $data['product']->slug?>" class="btn btn-default">Leave a Review</a>
                 </div>
 
                 <hr>
 
+                <?php if ($data['reviews'][0]->product_id == $data['product']->id) : ?>
+                <?php foreach ($data['reviews'] as $review) :?>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                            <?php echo $review->name ?>
+                            
+                            <p><?php echo $review->review ?></p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                <?php endforeach;?>
+                    <?php else:?>
                 <div class="row">
                     <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">10 days ago</span>
-                        <p>This product was great in terms of quality. I would definitely buy another!</p>
+                        <p>There is no reviews for this item yet, be First!</p>
                     </div>
                 </div>
-
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">12 days ago</span>
-                        <p>I've alredy ordered another one!</p>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">15 days ago</span>
-                        <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
-                    </div>
-                </div>
+                <?php endif ; ?>
 
             </div>
 

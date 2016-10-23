@@ -130,7 +130,11 @@ class User extends Model{
         }
         return false;
     }
-        
+    
+    public function findUserById($customerId){
+        $result = $this->_db->get('users',array('id','=',$customerId));
+        return $result->results();
+    }
     
 
     public function exists(){
