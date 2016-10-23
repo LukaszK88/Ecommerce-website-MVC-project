@@ -63,6 +63,12 @@ class Address extends Model{
             return true;
         }
     }
+
+    public function userExistsAndNoAddress(){
+        if($this->user()->isLoggedIn() and ($this->selectUserAddress()==false)){
+            return true;
+        }
+    }
     
     public function deleteAddress($address){
         $this->_db->delete('addresses',array('id','=',$address));

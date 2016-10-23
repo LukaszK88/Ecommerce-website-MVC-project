@@ -139,7 +139,122 @@ class Order extends Controller{
             }
 
         }elseif($this->user->isLoggedIn() and $this->address->selectUserAddress()==false){
-            echo 'only user';
+
+            if (Input::exists()) {
+                if (Token::check(Input::get('token'))) {
+                    $validate = new Validation();
+                    $validation = $validate->check($_POST, array(
+                        'address1' => array(
+                            //'unique' => 'addresses',
+                            'required' => true,
+                            'min' => 10,
+                            'max' => 150,
+                        ),
+                        'city' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 50,
+                        ),
+                        'post_code' => array(
+                            'required' => true,
+                            'min' => 3,
+                            'max' => 10,
+                        )
+                    ));
+                    if ($validation->passed()) {
+
+                        try {
+                            $this->address->create(array(
+                                'address1' => Input::get('address1'),
+                                'address2' => Input::get('address2'),
+                                'city' => Input::get('city'),
+                                'post_code' => Input::get('post_code'),
+                                'customer_id' => $this->user->data()->id
+
+                            ));
+                            //email(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
+
+                        } catch (Exception $e) {
+                            die($e->getMessage());
+                        }
+
+                        $this->address->selectLastAddress();
+
+                        try {
+                            $this->user->order()->create(array(
+                                'hash' => $hash,
+                                'paid' => false,
+                                'total' => $this->basket->subTotal(),
+                                'customer_id' => $this->user->data()->id,
+                                'address_id' => $this->address->lastEnteredData()->id
+
+                            ));
+
+                            //email(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
+
+                        } catch (Exception $e) {
+                            die($e->getMessage());
+                        }
+
+                        $this->order->selectLastOrder();
+
+                        try {
+                            foreach ($this->basket->all() as $item) {
+
+                                $this->order->createOrder(array(
+                                    'product_id' => $item->id,
+                                    'order_id' => $this->order->data()->id,
+                                    'quantity' => $item->quantity,
+
+                                ));
+
+                            }
+
+
+                        } catch (Exception $e) {
+                            die($e->getMessage());
+                        }
+
+                        $result = Braintree\Transaction::sale([
+                            'amount' => $this->basket->subTotal(),
+                            'paymentMethodNonce' => Input::get('payment_method_nonce'),
+                            'options' => [
+                                'submitForSettlement' => true
+                            ]
+
+                        ]);
+
+                        $events= new Event;
+                        $events->loadEvent('OrderWasCreated');
+                        $event = new OrderWasCreated($this->order,$this->basket,$result);
+
+
+
+                        if(!$result->success){
+
+                            $event->attach($events->loadHandler('RecordFailedPayment'));
+                            $event->dispatch();
+
+                            Redirect::to(Url::path().'/order/index');
+
+                        }
+
+                        $event->attach([
+
+                            $events->loadHandler('MarkOrderPaid'),
+                            $events->loadHandler('RecordSuccessfulPayment'),
+                            $events->loadHandler('UpdateStock'),
+                            $events->loadHandler('EmptyBasket')
+
+                        ]);
+
+                        $event->dispatch();
+
+                        Redirect::to(Url::path().'/order/show/'.$hash);
+
+                    }
+                }
+            }
         }else {
             if (Input::exists()) {
                 if (Token::check(Input::get('token'))) {

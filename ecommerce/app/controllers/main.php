@@ -246,41 +246,43 @@ class Main extends Controller{
                 $this->address->deleteAddress($_POST['delete']);
                 Redirect::to(Url::path().'/main/profile');
             }elseif (isset($_POST['add'])) {
-                $validate = new Validation();
-                $validation = $validate->check($_POST, array(
-                    'address1' => array(
-                        //'unique' => 'addresses',
-                        'required' => true,
-                        'min' => 10,
-                        'max' => 150,
-                    ),
-                    'city' => array(
-                        'required' => true,
-                        'min' => 4,
-                        'max' => 50,
-                    ),
-                    'post_code' => array(
-                        'required' => true,
-                        'min' => 3,
-                        'max' => 10,
-                    )
-                ));
-                if ($validation->passed()) {
+                if (Token::check(Input::get('token'))) {
+                    $validate = new Validation();
+                    $validation = $validate->check($_POST, array(
+                        'address1' => array(
+                            //'unique' => 'addresses',
+                            'required' => true,
+                            'min' => 10,
+                            'max' => 150,
+                        ),
+                        'city' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 50,
+                        ),
+                        'post_code' => array(
+                            'required' => true,
+                            'min' => 3,
+                            'max' => 10,
+                        )
+                    ));
+                    if ($validation->passed()) {
 
-                    try {
-                        $this->address->create(array(
-                            'address1' => Input::get('address1'),
-                            'address2' => Input::get('address2'),
-                            'city' => Input::get('city'),
-                            'post_code' => Input::get('post_code'),
-                            'customer_id' => $this->user->data()->id
+                        try {
+                            $this->address->create(array(
+                                'address1' => Input::get('address1'),
+                                'address2' => Input::get('address2'),
+                                'city' => Input::get('city'),
+                                'post_code' => Input::get('post_code'),
+                                'customer_id' => $this->user->data()->id
 
-                        ));
+                            ));
 
-                        Redirect::to(Url::path().'/main/profile');
+                            Redirect::to(Url::path() . '/main/profile');
 
-                    } catch (Exception $e) {
-                        die($e->getMessage());
+                        } catch (Exception $e) {
+                            die($e->getMessage());
+                        }
                     }
                 }
 
