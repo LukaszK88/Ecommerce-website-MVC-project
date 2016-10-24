@@ -8,7 +8,8 @@
 class Product extends Controller{
 
     protected $products,
-                $user;
+                $user,
+                $userReview = '';
 
     public function __construct(){
         $this->products = $this->model('Products');
@@ -24,16 +25,68 @@ class Product extends Controller{
             Redirect::to(Url::path().'/main/index');
         }
         
-        $reviews = $this->products->selectReviews();
+        $reviews         = $this->products->selectReviewsAndUsers();
+        $reviewCount     = $this->products->countReviews($product->id);
+        $avgRating       = number_format($this->products->getAverageRating($product->id)->ratingAvg,1,'.','');
 
-        
-
-        $this->view('product/index',['product'=>$product,'products'=>$this->products,'reviews'=>$reviews]);
+        $this->view('product/index',['product'=>$product,'products'=>$this->products,'reviews'=>$reviews,'user'=>$this->user,'avgRating'=>$avgRating]);
     }
 
-    public function review($slug = ''){
+    public function review($slug = '', $reviewId = '', $update = ''){
+
 
         $product = $this->products->compareSlug($slug);
+        $reviews = $this->products->selectReviewsAndUsers();
+
+
+            if($update == 'update'){
+                foreach ($reviews as $review){
+
+                }
+                if ($reviewId == $review->id){
+                    $this->userReview = $this->products->selectReviews($review->id);
+                }
+
+                if(!$this->user->isLoggedIn()){
+                    Message::setMessage('You must be logged in to leave a review','error');
+                    Redirect::to(Url::path().'/product/'.$product->slug);
+                }else {
+                    if (Input::exists()) {
+                        if (Token::check(Input::get('token'))) {
+                            $validate = new Validation();
+                            $validation = $validate->check($_POST, array(
+                                'rating' => array(
+                                    'required' => true,
+                                    'min' => 0.5,
+                                    'max' => 5,
+                                ),
+                                'review' => array(
+                                    'required' => true,
+                                    'min' => 10,
+                                    'max' => 500,
+                                )
+                            ));
+                            if ($validation->passed()) {
+
+                                try {
+                                    $this->products->updateReview($review->id,array(
+                                        'rating' => Input::get('rating'),
+                                        'review' => Input::get('review'),
+                                    ));
+
+                                    Message::setMessage('Review updated','success');
+                                    Redirect::to(Url::path().'/product/'.$product->slug);
+
+                                } catch (Exception $e) {
+                                    die($e->getMessage());
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
 
         if(!$product){
             Redirect::to(Url::path().'/main/index');
@@ -80,7 +133,20 @@ class Product extends Controller{
             }
         }
 
-        $this->view('product/review',['product'=>$product,'products'=>$this->products]);
+        $this->view('product/review',['product'=>$product,'products'=>$this->products,'update'=>$update,'userReview'=>$this->userReview]);
     }
 
+    public function delete($slug = ''){
+
+        $product = $this->products->compareSlug($slug);
+        $reviews = $this->products->selectReviewsAndUsers();
+        foreach ($reviews as $review){
+
+        }
+        $this->products->deleteReview($review->id);
+
+        Redirect::to(Url::path().'/product/'.$product->slug);
+
+        $this->view('product/delete');
+    }
 }

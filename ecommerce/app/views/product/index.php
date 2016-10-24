@@ -29,14 +29,16 @@
                     <a href="<?php echo Url::path() ?>/cart/add/<?php echo $data['product']->slug?>/1" class="btn btn-default btn-sm">Add to cart</a>
                 </div>
                 <div class="ratings">
-                    <p class="pull-right">3 reviews</p>
+                    <p class="pull-right">
+                        <?php if(!empty($data['products']->countReviews($data['product']->id))):?>
+                        <?php echo $data['products']->countReviews($data['product']->id).' reviews' ?>
+                        <?php else:?>
+                        <?php echo 'no reviews'?>
+                        </p>
+                        <?php endif; ?>
                     <p>
                         <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        4.0 stars
+                       <?php echo $data['avgRating'] ?>
                     </p>
                 </div>
             </div>
@@ -49,32 +51,34 @@
 
                 <hr>
 
-                <?php if ($data['reviews'][0]->product_id == $data['product']->id) : ?>
+                <?php if ($data['products']->countReviews($data['product']->id) == false) : ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>There is no reviews for this item yet, be the First!</p>
+                    </div>
+                </div>
+                <?php else : ?>
                 <?php foreach ($data['reviews'] as $review) :?>
-
+                    <?php if ($review->product_id == $data['product']->id) : ?>
                     <div class="row">
                         <div class="col-md-12">
                             <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
+                            <?php echo $review->rating ?> / 5
                             <?php echo $review->name ?>
-                            
+                        <?php if($data['user']->isLoggedIn() and ($review->username == Session::get('username'))):  ?>
+                            <a href="<?php echo Url::path() ?>/product/delete/<?php echo $data['product']->slug?>" class="btn btn-default btn-sm pull-right ">delete</a>
+                            <a href="<?php echo Url::path() ?>/product/review/<?php echo $data['product']->slug?>/<?php echo $review->id?>/update" class="btn btn-default btn-sm pull-right ">update</a>
+                            <?php endif;?>
                             <p><?php echo $review->review ?></p>
                         </div>
                     </div>
 
                     <hr>
-
-                <?php endforeach;?>
-                    <?php else:?>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>There is no reviews for this item yet, be First!</p>
-                    </div>
-                </div>
+                    <?php endif ; ?>
+                <?php endforeach ; ?>
                 <?php endif ; ?>
+
+
 
             </div>
 

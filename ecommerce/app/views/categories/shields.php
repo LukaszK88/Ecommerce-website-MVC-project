@@ -22,16 +22,13 @@
                         <h4 class="pull-right"><?php echo $product->price ?></h4>
                         <h4><a href="<?php echo Url::path()?>/product/<?php echo $product->slug ?>"><?php echo $product->title ?></a>
                         </h4>
-                        <p><?php echo $product->description ?><a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+                        <p><?php echo $product->description ?></p>
                     </div>
                     <div class="ratings">
-                        <p class="pull-right">15 reviews</p>
+                        <p class="pull-right"><?php echo $data['review']->countReviews($product->id) ?> reviews</p>
                         <p>
                             <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
+                            <?php echo number_format($data['review']->getAverageRating($product->id)->ratingAvg,1,'.','');?>
                         </p>
                     </div>
                 </div>

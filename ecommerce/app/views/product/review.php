@@ -19,11 +19,11 @@
                 <form action="" method="post">
                     <div class="form-group">
                         <label for="rating">Rating:</label><br>
-                        <input class="ex1" data-slider-id='ex1Slider' name="rating" type="text" data-slider-min="0" data-slider-max="5" data-slider-step="0.5" data-slider-value=""/>
+                        <input class="ex1" data-slider-id='ex1Slider' name="rating" type="text" data-slider-min="0" data-slider-max="5" data-slider-step="0.5" data-slider-value="<?php  if($data['update']=='update'){echo $data['userReview']->rating ;} ?>"/>
                     </div>
                 <div class="form-group">
                     <label for="review">Review*:</label><br>
-                    <textarea rows="4"  name="review" class="form-control"></textarea>
+                    <textarea rows="4"  name="review" class="form-control" ><?php if($data['update']=='update'){echo $data['userReview']->review ;} ;?></textarea>
                 </div>
 
                     <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">

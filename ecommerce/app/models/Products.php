@@ -9,6 +9,7 @@ class Products extends Model{
 
     public  $_db,
             $stock,
+            $rating,
             $order,
             $data;
 
@@ -50,10 +51,33 @@ class Products extends Model{
          }
         return false;
     }
+    
+    public function countReviews($productId){
+        $result = $this->_db->get('products_reviews',array('product_id','=',$productId));
+        if($result->count()) {
+         
+            return $result->count();
+        }
+        return false;
+    }
 
-    public function selectReviews(){
+    public function selectReviewsAndUsers(){
         $products = $this->_db->joinUsersAndReviews();
         return $products;
+    }
+    
+    public function selectReviews($reviewId){
+        $result = $this->_db->get('products_reviews',array('id','=',$reviewId));
+        if($result->count()) {
+
+            return $result->first();
+        }
+    }
+    
+    public function getAverageRating($productId){
+        $result = $this->_db->selectAvg('rating','ratingAvg','products_reviews',array('product_id','=',$productId));
+       
+        return $result->first();
     }
 
     public function insertReview($fields){
@@ -63,9 +87,18 @@ class Products extends Model{
         }
     }
     
+    public function deleteReview($reviewId){
+        $this->_db->delete('products_reviews',array('id','=',$reviewId));
+    }
+
+    public function updateReview($id,$fields){
+        $this->_db->update('products_reviews',$id,$fields);
+    }
+    
     public function data(){
         return $this->data;
     }
+    
 
     public function hasLowStock(){
 

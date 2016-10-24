@@ -138,6 +138,9 @@ class Database extends PDO {
         }
     }
     
+    public function selectAvg($columnName,$what,$table,$where){
+        return $this->action('SELECT AVG('.$columnName.') AS '.$what.'', $table, $where);
+    }
     
     public function select($table, $where){
         return $this->action('SELECT *', $table, $where);
