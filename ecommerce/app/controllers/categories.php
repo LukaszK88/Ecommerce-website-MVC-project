@@ -9,23 +9,14 @@ class Categories extends Controller{
 
     protected $products,
                 $productList;
-    public function shields($name = ''){
-
-
-
+ 
+    public function index($subCategory = ''){
 
         $this->products = $this->model('Products');
-
-        $this->productList = $this->products->selectProducts();
-        
-        
-        $this->view('categories/shields',['product'=>$this->productList, 'review'=>$this->products]);
-    }
-    public function index($name = ''){
+        $this->productList = $this->products->selectProducts($subCategory);
 
 
-
-        $this->view('categories/index');
+        $this->view('categories/index',['product'=>$this->productList, 'review'=>$this->products]);
     }
 
 }

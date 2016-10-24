@@ -23,8 +23,8 @@ class Products extends Model{
         $this->_db->updateById('products',$id,$idValue,array('stock'=> $currentStock - $quantity));
     }
     
-    public function selectProducts(){
-        $products = $this->_db->get('products',array('id','>',0));
+    public function selectProducts($subcategory){
+        $products = $this->_db->get('products',array('category_slug','=',$subcategory));
         return $products->results();
     }
 

@@ -23,8 +23,8 @@
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">Shields</a>
                             <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/shields">West</a></li>
-                                <li><a href="#">East</a></li>
+                                <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/shield-west">West</a></li>
+                                <li><a href="<?php echo Url::path() ?>/categories/shield-east">East</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
@@ -35,7 +35,7 @@
                                     <ul class="dropdown-menu">
                                         <li><a tabindex="-1" href="#">Head</a></li>
                                         <li><a href="#">Body</a></li>
-                                        <li><a href="#">Legs/Arms</a></li>
+                                        <li><a href="<?php echo Url::path() ?>/categories/armour-1v1-legs-arms">Legs/Arms</a></li>
                                     </ul>
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">Bohurt</a>

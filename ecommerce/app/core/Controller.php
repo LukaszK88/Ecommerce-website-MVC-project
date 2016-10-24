@@ -23,7 +23,6 @@ class Controller{
         else {
             require_once '../app/basket/Basket.php';
             $basket = new Basket();
-
             require_once config::get('default/header_file');
             require_once config::get('default/navbar_top');
             require_once '../app/views/' . $view . '.php';
