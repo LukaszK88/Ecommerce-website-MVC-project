@@ -18,9 +18,9 @@
                     <span class="label label-danger"> Out of stock</span>
                     <?php endif ?>
                     <?php if($data['products']->hasLowStock()) :?>
-                        <span class="label label-warning"> Low stock</span>
+                        <span class="label label-success"> Available</span>
                     <?php endif ?>
-                    <h4 class="pull-right"><?php echo $data['product']->price ?></h4>
+                    <h4 class="pull-right">£ <?php echo $data['product']->price ?></h4>
 
                     <h4><a href="#"><?php echo $data['product']->title ?></a>
                     </h4>
@@ -66,7 +66,7 @@
                             <?php echo $review->rating ?> / 5
                             <?php echo $review->name ?>
                         <?php if($data['user']->isLoggedIn() and ($review->username == Session::get('username'))):  ?>
-                            <a href="<?php echo Url::path() ?>/product/delete/<?php echo $data['product']->slug?>" class="btn btn-default btn-sm pull-right ">delete</a>
+                            <a href="<?php echo Url::path() ?>/product/delete/<?php echo $data['product']->slug?>/<?php echo $review->id?>" class="btn btn-default btn-sm pull-right ">delete</a>
                             <a href="<?php echo Url::path() ?>/product/review/<?php echo $data['product']->slug?>/<?php echo $review->id?>/update" class="btn btn-default btn-sm pull-right ">update</a>
                             <?php endif;?>
                             <p><?php echo $review->review ?></p>

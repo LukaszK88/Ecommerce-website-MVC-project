@@ -19,6 +19,21 @@ class Products extends Model{
         $this->_db = Database::getInstance();
     }
 
+    public function insertProduct($fields){
+        if(!$this->_db->insert('products',$fields)){
+
+            throw new Exception('There was a problem with inserting your product');
+        }
+    }
+
+    public function deleteProduct($productId){
+        $this->_db->delete('products',array('id','=',$productId));
+    }
+
+    public function updateProduct($id,$fields){
+        $this->_db->update('products',$id,$fields);
+    }
+
     public function update($id,$idValue,$currentStock,$quantity){
         $this->_db->updateById('products',$id,$idValue,array('stock'=> $currentStock - $quantity));
     }

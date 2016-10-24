@@ -50,9 +50,9 @@
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">Paddings</a>
                             <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#">Head</a></li>
-                                <li><a href="#">Body</a></li>
-                                <li><a href="#">Legs</a></li>
+                                <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/paddings-head">Head</a></li>
+                                <li><a href="<?php echo Url::path() ?>/categories/paddings-body">Body</a></li>
+                                <li><a href="<?php echo Url::path() ?>/categories/paddings-legs">Legs</a></li>
                             </ul>
                         </li>
 

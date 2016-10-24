@@ -26,7 +26,7 @@ class Product extends Controller{
         }
         
         $reviews         = $this->products->selectReviewsAndUsers();
-        $reviewCount     = $this->products->countReviews($product->id);
+        
         $avgRating       = number_format($this->products->getAverageRating($product->id)->ratingAvg,1,'.','');
 
         $this->view('product/index',['product'=>$product,'products'=>$this->products,'reviews'=>$reviews,'user'=>$this->user,'avgRating'=>$avgRating]);
@@ -36,16 +36,10 @@ class Product extends Controller{
 
 
         $product = $this->products->compareSlug($slug);
-        $reviews = $this->products->selectReviewsAndUsers();
-
 
             if($update == 'update'){
-                foreach ($reviews as $review){
+                $this->userReview = $this->products->selectReviews($reviewId);
 
-                }
-                if ($reviewId == $review->id){
-                    $this->userReview = $this->products->selectReviews($review->id);
-                }
 
                 if(!$this->user->isLoggedIn()){
                     Message::setMessage('You must be logged in to leave a review','error');
@@ -69,7 +63,7 @@ class Product extends Controller{
                             if ($validation->passed()) {
 
                                 try {
-                                    $this->products->updateReview($review->id,array(
+                                    $this->products->updateReview($reviewId,array(
                                         'rating' => Input::get('rating'),
                                         'review' => Input::get('review'),
                                     ));
@@ -136,17 +130,14 @@ class Product extends Controller{
         $this->view('product/review',['product'=>$product,'products'=>$this->products,'update'=>$update,'userReview'=>$this->userReview]);
     }
 
-    public function delete($slug = ''){
+    public function delete($slug = '',$reviewId = ''){
 
         $product = $this->products->compareSlug($slug);
-        $reviews = $this->products->selectReviewsAndUsers();
-        foreach ($reviews as $review){
 
+        if(!empty($reviewId)) {
+            $this->products->deleteReview($reviewId);
+            Redirect::to(Url::path() . '/product/' . $product->slug);
         }
-        $this->products->deleteReview($review->id);
-
-        Redirect::to(Url::path().'/product/'.$product->slug);
-
         $this->view('product/delete');
     }
 }

@@ -9,6 +9,7 @@
     <div class="row">
         <div class="col-md-4 col-md-offset-4 text-center">
             <h2 class="well "><?php echo $data['product'][0]->category ?></h2>
+            <?php Message::displayMessage() ?>
         </div>
     </div>
     <div class="row">
@@ -19,7 +20,7 @@
                     <div class="thumbnail">
                         <img src="<?php echo $product->image ?>" alt="">
                         <div class="caption">
-                            <h4 class="pull-right"><?php echo $product->price ?></h4>
+                            <h4 class="pull-right">£ <?php echo $product->price ?></h4>
                             <h4><a href="<?php echo Url::path()?>/product/<?php echo $product->slug ?>"><?php echo $product->title ?></a>
                             </h4>
                             <p><?php echo $product->description ?></p>
@@ -31,8 +32,12 @@
                                 <?php echo number_format($data['review']->getAverageRating($product->id)->ratingAvg,1,'.','');?>
                             </p>
                         </div>
+                        <a href="<?php echo Url::path()?>/categories/delete/<?php echo $product->id ?>/<?php echo $product->category_slug ?>" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="<?php echo Url::path()?>/main/admin/<?php echo $product->id ?>/<?php echo $product->category_slug ?>" class="btn btn-warning btn-sm">Update</a>
                     </div>
+
                 </div>
+
             <?php endforeach;?>
 
 

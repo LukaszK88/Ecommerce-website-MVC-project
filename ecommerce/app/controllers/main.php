@@ -9,11 +9,13 @@
 class Main extends Controller{
 
     protected   $user,
-                $address = '';
+                $address = '',
+                $products;
 
     public function __construct(){
         $this->user = $this->model('User');
         $this->address = $this->model('Address');
+        $this->products = $this->model('Products');
     }
 
     public function index($name = ''){
@@ -223,10 +225,150 @@ class Main extends Controller{
         $this->view('main/recovery');
     }
 
-    public function admin($name = ''){
-        
+    public function admin($productId = '',$categorySlug = ''){
 
-        $this->view('main/admin');
+        if(!empty($productId)){
+            $products = $this->products->selectProducts($categorySlug);
+           
+            if (Input::exists()) {
+                if (Token::check(Input::get('token'))) {
+                    $validate = new Validation();
+                    $validation = $validate->check($_POST, array(
+                        'title' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
+                        'slug' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
+                        'price' => array(
+                            'required' => true,
+                            'min' => 1,
+                            'max' => 20,
+                        ),
+                        'category' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
+                        'category_slug' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
+                        'stock' => array(
+                            'max' => 50,
+                        ),
+                        'description' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 500,
+                        ),
+                        'image' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
+                    ));
+                    if ($validation->passed()) {
+
+                        try {
+                            $this->products->updateProduct($productId,array(
+                                'title' => Input::get('title'),
+                                'slug' => Input::get('slug'),
+                                'price' => Input::get('price'),
+                                'category' => Input::get('category'),
+                                'category_slug' => Input::get('category_slug'),
+                                'description' => Input::get('description'),
+                                'stock' => Input::get('stock'),
+                                'image' => Input::get('image')
+                            ));
+                            Message::setMessage('Product updated', 'success');
+                            Redirect::to(Url::path() . '/categories/' .$categorySlug);
+
+                        } catch (Exception $e) {
+                            die($e->getMessage());
+                        }
+                    }
+
+                }
+            }
+
+
+
+        }else {
+
+            if (Input::exists()) {
+                if (Token::check(Input::get('token'))) {
+                    $validate = new Validation();
+                    $validation = $validate->check($_POST, array(
+                        'title' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
+                        'slug' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
+                        'price' => array(
+                            'required' => true,
+                            'min' => 1,
+                            'max' => 20,
+                        ),
+                        'category' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
+                        'category_slug' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
+                        'stock' => array(
+                            'max' => 50,
+                        ),
+                        'description' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 500,
+                        ),
+                        'image' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
+                    ));
+                    if ($validation->passed()) {
+
+                        try {
+                            $this->products->insertProduct(array(
+                                'title' => Input::get('title'),
+                                'slug' => Input::get('slug'),
+                                'price' => Input::get('price'),
+                                'category' => Input::get('category'),
+                                'category_slug' => Input::get('category_slug'),
+                                'description' => Input::get('description'),
+                                'stock' => Input::get('stock'),
+                                'image' => Input::get('image')
+                            ));
+                            Message::setMessage('Product uploaded', 'success');
+                            Redirect::to(Url::path() . '/main/admin');
+
+                        } catch (Exception $e) {
+                            die($e->getMessage());
+                        }
+                    }
+
+                }
+            }
+        }
+        $this->view('main/admin',['product'=>$products[0]]);
     }
 
 
@@ -294,7 +436,5 @@ class Main extends Controller{
 
         $this->view('main/profile',['user'=>$this->user->data(),'addresses'=>$this->address->data()]);
     }
-
-
-
+    
 }
