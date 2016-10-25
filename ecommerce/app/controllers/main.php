@@ -10,6 +10,7 @@ class Main extends Controller{
 
     protected   $user,
                 $address = '',
+                $product = '',
                 $products;
 
     public function __construct(){
@@ -51,7 +52,7 @@ class Main extends Controller{
                             'joined' => date('Y-m-d H:i:s'),
                             'role' => 1
                         ));
-                        //email(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
+                        Email::sendEmail(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
 
                     } catch (Exception $e) {
                         die($e->getMessage());
@@ -197,7 +198,7 @@ class Main extends Controller{
                     if($user->userExists($username)) {
 
                         if ($name == ('username')) {
-                           // email(Input::get('username'), 'Your username reminder', $user->data()->username);
+                            Email::sendEmail(Input::get('username'), 'Your username reminder', $user->data()->username);
                             Message::setMessage('Username has been sent, check your inbox!','success');
                             Redirect::to(Url::path().'/main/login');
                         } else if ($name == ('password')) {
@@ -206,7 +207,7 @@ class Main extends Controller{
                                 'temp_password'=>Hash::md5($username),
                                 'password'     => ''
                             ),$id);
-                           // email(Input::get('username'), 'Your password reminder', Hash::md5($username));
+                            Email::sendEmail(Input::get('username'), 'Your password reminder', Hash::md5($username));
                             Message::setMessage('Password has been sent, check your inbox!','success');
                             Redirect::to(Url::path().'/main/login');
                         } else {
@@ -228,8 +229,8 @@ class Main extends Controller{
     public function admin($productId = '',$categorySlug = ''){
 
         if(!empty($productId)){
-            $products = $this->products->selectProducts($categorySlug);
-           
+            $this->product = $this->products->selectProducts($categorySlug);
+
             if (Input::exists()) {
                 if (Token::check(Input::get('token'))) {
                     $validate = new Validation();
@@ -357,6 +358,7 @@ class Main extends Controller{
                                 'stock' => Input::get('stock'),
                                 'image' => Input::get('image')
                             ));
+
                             Message::setMessage('Product uploaded', 'success');
                             Redirect::to(Url::path() . '/main/admin');
 
@@ -368,7 +370,7 @@ class Main extends Controller{
                 }
             }
         }
-        $this->view('main/admin',['product'=>$products[0]]);
+        $this->view('main/admin',['product'=>$this->product,'productId'=>$productId]);
     }
 
 
@@ -432,9 +434,57 @@ class Main extends Controller{
 
         }
        
-
-
         $this->view('main/profile',['user'=>$this->user->data(),'addresses'=>$this->address->data()]);
+    }
+
+    public function contact($name = '')
+    {
+
+
+        if (Input::exists()) {
+            if (Token::check(Input::get('token'))) {
+                $validate = new Validation();
+                $validation = $validate->check($_POST, array(
+                    'name' => array(
+                        'required' => true,
+                        'min' => 4,
+                        'max' => 60,
+                    ),
+                    'last_name' => array(
+                        'required' => true,
+                        'min' => 4,
+                        'max' => 60,
+                    ),
+                    'email' => array(
+                        'required' => true,
+                        'email' => true,
+                        'min' => 4,
+                        'max' => 60,
+                    ),
+                    'message' => array(
+                        'required' => true,
+                        'min' => 4,
+                        'max' => 500,
+                    ),
+                ));
+                if ($validation->passed()) {
+
+                    Email::sendEmail('lukaskowalpl@yahoo.co.uk','New message from '.Input::get('name').' '.Input::get('email').'', Input::get('message'));
+                    Message::setMessage('Message sent <br> We will get back to you ASAP','success');
+                    Redirect::to(Url::path() . '/main/index');
+
+                }
+            }
+        }
+
+
+
+        $this->view('main/contact',['user'=>$this->user]);
+    }
+
+    public function about(){
+
+        $this->view('main/about');
     }
     
 }

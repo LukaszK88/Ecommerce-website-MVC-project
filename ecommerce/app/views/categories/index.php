@@ -32,8 +32,10 @@
                                 <?php echo number_format($data['review']->getAverageRating($product->id)->ratingAvg,1,'.','');?>
                             </p>
                         </div>
+                        <?php if($data['user']->isLoggedIn() and $data['user']->hasPermission('admin')): ?>
                         <a href="<?php echo Url::path()?>/categories/delete/<?php echo $product->id ?>/<?php echo $product->category_slug ?>" class="btn btn-danger btn-sm">Delete</a>
                         <a href="<?php echo Url::path()?>/main/admin/<?php echo $product->id ?>/<?php echo $product->category_slug ?>" class="btn btn-warning btn-sm">Update</a>
+                        <?php endif; ?>
                     </div>
 
                 </div>

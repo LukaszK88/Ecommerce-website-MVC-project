@@ -172,7 +172,6 @@ class Order extends Controller{
                                 'customer_id' => $this->user->data()->id
 
                             ));
-                            //email(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
 
                         } catch (Exception $e) {
                             die($e->getMessage());
@@ -309,7 +308,7 @@ class Order extends Controller{
                                 Session::put('username', $this->user->data()->username);
                             }
 
-                            //email(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
+                            Email::sendEmail(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
 
                         } catch (Exception $e) {
                             die($e->getMessage());
@@ -324,7 +323,6 @@ class Order extends Controller{
                                 'customer_id' => $this->user->data()->id
 
                             ));
-                            //email(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
 
                         } catch (Exception $e) {
                             die($e->getMessage());
@@ -342,7 +340,6 @@ class Order extends Controller{
 
                             ));
 
-                            //email(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
 
                         } catch (Exception $e) {
                             die($e->getMessage());
@@ -391,6 +388,13 @@ class Order extends Controller{
 
                         }
 
+                      /*  if($result->success){
+
+                            Email::sendEmail(Input::get('username'),'Your order summary!',
+                                'Your items'.$item->title.'x'.$item->quantity.'<br> Total'.$this->basket->subTotal() .''
+                                );
+                        } */
+
                         $event->attach([
 
                             $events->loadHandler('MarkOrderPaid'),
@@ -402,6 +406,8 @@ class Order extends Controller{
 
                         $event->dispatch();
 
+
+
                         Redirect::to(Url::path().'/order/show/'.$hash);
                     }
 
@@ -410,10 +416,10 @@ class Order extends Controller{
             }
         }
 
-        
+
         $this->view('order/index',['user'=>$this->user->data(),'address'=>$this->address,'userAddress'=>$this->userAddress]);
     }
-    
+
     public function show($hash = ''){
 
         $this->order->selectLastOrder();
@@ -426,28 +432,11 @@ class Order extends Controller{
             Redirect::to(Url::path().'/main/index');
         }
 
-        if($this->address->userAndAddressExists() and $this->user->isLoggedIn()){
+        $products = $this->product->joinProducts($this->order->data()->id);
 
-            foreach ($this->userAddresses as $this->userAddress) {
-                $address = $this->userAddress;
-            }
-        }else {
-            $address = $this->address->lastEnteredData();
-        }
-        $orderId = $this->order->data()->id;
-        $products = $this->order->select($orderId);
-
-        foreach ($products as $product){
-
-        }
-        $productsArray[] = $this->product->joinProducts($product->product_id);
-        foreach ($productsArray as $product){
-            $this->item = $product;
-        }
-
-        $this->view('order/show',['address' => $address,'product' => $this->item,'order' =>$this->order->data()]);
+        $this->view('order/show',['address' => $this->address->dataFirst(),'product' => $products,'order' =>$this->order->data()]);
     }
-    
+
     public function update(){
 
 

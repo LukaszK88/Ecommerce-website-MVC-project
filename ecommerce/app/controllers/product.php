@@ -26,8 +26,32 @@ class Product extends Controller{
         }
         
         $reviews         = $this->products->selectReviewsAndUsers();
-        
+
         $avgRating       = number_format($this->products->getAverageRating($product->id)->ratingAvg,1,'.','');
+
+        if (Input::exists()) {
+            if (Token::check(Input::get('token'))) {
+                $validate = new Validation();
+                $validation = $validate->check($_POST, array(
+                    'stock' => array(
+                        'min' => 0,
+                        'max' => 20,
+                    )));
+                if($validation->passed()){
+                    try {
+                        $this->products->updateProduct($product->id,array(
+                            'stock' => Input::get('stock')
+                        ));
+                        Message::setMessage('Stock updated', 'success');
+                        Redirect::to(Url::path() . '/product/' .$slug);
+
+                    } catch (Exception $e) {
+                        die($e->getMessage());
+                    }
+                }
+
+            }
+        }
 
         $this->view('product/index',['product'=>$product,'products'=>$this->products,'reviews'=>$reviews,'user'=>$this->user,'avgRating'=>$avgRating]);
     }

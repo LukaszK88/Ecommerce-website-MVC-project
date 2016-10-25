@@ -11,14 +11,46 @@
             <img class="img-responsive" src="<?php echo $data['product']->image ?>" alt="">
         </div>
         <div class="col-md-6">
-            <?php Message::displayMessage();?>
+            <?php Message::displayMessage();
+                    Validation::displayErrors();
+            ;?>
             <div class="thumbnail">
                 <div class="caption-full">
+
                     <?php if($data['products']->outOfStock()) :?>
                     <span class="label label-danger"> Out of stock</span>
+
+                        <?php if($data['user']->isLoggedIn() and $data['user']->hasPermission('admin')): ?>
+                            <form action="" method="post" class="form-inline">
+                                <select name="stock" class="form-control input-sm">
+                                    <?php foreach (range(0,20) as $num): ?>
+                                        <option><?php echo $num ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
+                                <button type="submit" class=" btn btn-default btn-sm">update</button>
+                            </form>
+                        <?php endif;?>
+                        
                     <?php endif ?>
-                    <?php if($data['products']->hasLowStock()) :?>
+
+                    <?php if($data['products']->inStock()) :?>
+
                         <span class="label label-success"> Available</span>
+                        <span class="label label-success"> <?php echo $data['products']->stock ?></span>
+
+                        <?php if($data['user']->isLoggedIn() and $data['user']->hasPermission('admin')): ?>
+                             <form action="" method="post" class="form-inline">
+                                <select name="stock" class="form-control input-sm">
+                                    <?php foreach (range(0,20) as $num): ?>
+                                            <option><?php echo $num ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
+                                <button type="submit" class=" btn btn-default btn-sm">update</button>
+                              </form>
+                        <?php endif;?>
+
                     <?php endif ?>
                     <h4 class="pull-right">£ <?php echo $data['product']->price ?></h4>
 

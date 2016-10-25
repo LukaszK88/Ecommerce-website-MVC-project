@@ -7,11 +7,13 @@
  */
 class Categories extends Controller{
 
-    protected $products,
+    protected   $products,
+                $user,
                 $productList;
 
     public function __construct(){
         $this->products = $this->model('Products');
+        $this->user = $this->model('User');
     }
 
     public function index($subCategory = ''){
@@ -23,7 +25,7 @@ class Categories extends Controller{
         }
 
 
-        $this->view('categories/index',['product'=>$this->productList, 'review'=>$this->products]);
+        $this->view('categories/index',['product'=>$this->productList, 'review'=>$this->products, 'user'=>$this->user]);
     }
 
     public function delete($itemId = '',$categorySlug = ''){

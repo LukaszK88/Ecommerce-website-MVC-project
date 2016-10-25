@@ -10,6 +10,7 @@ class Orders extends Model{
     public $_db,
             $address,
             $_data,
+            $dataFirst,
             $payment,
             $products;
 
@@ -49,6 +50,7 @@ class Orders extends Model{
         $orders = $this->_db->get('orders',array('id','>',0));
         if($orders->count()){
 
+            $this->dataFirst = $orders->first();
             $result = $orders->results();
             $this->_data = end($result);
 
@@ -60,7 +62,12 @@ class Orders extends Model{
 
         return $this->_data;
     }
-    
+
+    public function dataFirst(){
+
+        return $this->dataFirst;
+    }
+
     public function products(){
         if($this->products == null) {
             $this->products = new Products();

@@ -23,8 +23,8 @@
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">Shields</a>
                             <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/shield-west">West</a></li>
-                                <li><a href="<?php echo Url::path() ?>/categories/shield-east">East</a></li>
+                                <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/western-shields">West</a></li>
+                                <li><a href="<?php echo Url::path() ?>/categories/easter-shields">East</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
@@ -33,16 +33,16 @@
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">1v1</a>
                                     <ul class="dropdown-menu">
-                                        <li><a tabindex="-1" href="#">Head</a></li>
-                                        <li><a href="#">Body</a></li>
-                                        <li><a href="<?php echo Url::path() ?>/categories/armour-1v1-legs-arms">Legs/Arms</a></li>
+                                        <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/1v1-head">Head</a></li>
+                                        <li><a href="<?php echo Url::path() ?>/categories/1v1-upperbody">Upper Body</a></li>
+                                        <li><a href="<?php echo Url::path() ?>/categories/1v1-lowerbody">Legs</a></li>
                                     </ul>
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">Bohurt</a>
                                     <ul class="dropdown-menu">
-                                        <li><a tabindex="-1" href="#">Head</a></li>
-                                        <li><a href="#">Body</a></li>
-                                        <li><a href="#">Legs/Arms</a></li>
+                                        <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/bohurt-lowerbody">Head</a></li>
+                                        <li><a href="<?php echo Url::path() ?>/categories/bohurt-upperbody">Body</a></li>
+                                        <li><a href="<?php echo Url::path() ?>/categories/bohurt-lowerbody">Legs/Arms</a></li>
                                     </ul>
 
                             </ul>
@@ -51,23 +51,23 @@
                             <a tabindex="-1" href="#">Paddings</a>
                             <ul class="dropdown-menu">
                                 <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/paddings-head">Head</a></li>
-                                <li><a href="<?php echo Url::path() ?>/categories/paddings-body">Body</a></li>
-                                <li><a href="<?php echo Url::path() ?>/categories/paddings-legs">Legs</a></li>
+                                <li><a href="<?php echo Url::path() ?>/categories/paddings-upperbody">Body</a></li>
+                                <li><a href="<?php echo Url::path() ?>/categories/paddings-lowerbody">Legs</a></li>
                             </ul>
                         </li>
 
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Others</a>
+                            <a href="<?php echo Url::path() ?>/categories/others"><i class="fa fa-fw fa-user"></i> Others</a>
                         </li>
                     </ul>
                 <li>
-                    <a href="#">About</a>
+                    <a href="<?php echo Url::path() ?>/main/about">About</a>
                 </li>
                 <li>
                     <a href="#">Services</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="<?php echo Url::path() ?>/main/contact">Contact</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

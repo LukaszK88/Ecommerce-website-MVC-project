@@ -11,6 +11,7 @@ class Address extends Model{
     public $_db,
             $data,
             $lastEnteredData,
+            $dataFirst,
             $user,
             $count,
             $order;
@@ -46,6 +47,7 @@ class Address extends Model{
         if($addresses->count()){
             $this->count = $addresses->count();
             $this->data = $addresses->results();
+            $this->dataFirst = $addresses->first();
 
             return true;
         }
@@ -77,6 +79,11 @@ class Address extends Model{
     public function count(){
 
         return $this->count;
+    }
+
+    public function dataFirst(){
+
+        return $this->dataFirst;
     }
 
     public function data(){

@@ -97,7 +97,7 @@ class Database extends PDO {
         $sql= "SELECT orders_products.*, products.*
         FROM orders_products
         INNER JOIN products
-        ON orders_products.order_id={$order_id} AND products.id=orders_products.product_id";
+        ON products.id=orders_products.product_id AND orders_products.order_id={$order_id}";
 
         $results = $this->_pdo->query($sql);
         $rows = $results->fetchAll(PDO::FETCH_OBJ);
