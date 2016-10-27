@@ -16,11 +16,11 @@
                 <form action="" method="POST">
                         <div class="form-group">
                             <label for="name">Name:</label><br>
-                            <input type="text"  id="name" name="name" value="<?php echo Input::get('name')?>">
+                            <input type="text"  id="name" name="name" value="<?php echo !empty($data['user']->name) ? $data['user']->name : Input::get('name'); ?>">
                         </div>
                         <div class="form-group">
                             <label for="password_current">Current Password:</label><br>
-                            <input type="password"  id="password_current" name="password_current" value="<?php if(!empty($data['temp_password'])){ echo $data['temp_password'];} ?>">
+                            <input type="password"  id="password_current" name="password_current" value="<?php echo !empty($data['user']->temp_password) ? $data['user']->temp_password : Input::get('password_current'); ?>">
                         </div>
                         <div class="form-group">
                             <label for="new_password">New Password:</label><br>

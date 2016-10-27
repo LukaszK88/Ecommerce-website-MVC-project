@@ -17,8 +17,7 @@ class Order extends Controller{
                 $item,
                 $address,
                 $address1,
-                $userAddress = '',
-                $userAddresses;
+                $userAddress = '';
 
     public function __construct(){
 
@@ -28,13 +27,8 @@ class Order extends Controller{
         $this->address  = $this->model('Address');
         $this->order    = $this->model('Orders');
         $this->model('Payment');
+        
 
-        if($this->address->userAndAddressExists() and $this->user->isLoggedIn()) {
-            $this->address->set('address1', $this->address->data()[0]->address1);
-            $this->address->set('userAddresses',$this->address->selectUserAddressByIdAndAddress($this->address->get('address1')));
-
-            $this->userAddresses = $this->address->get('userAddresses');
-        }
 
     }
 
@@ -57,83 +51,93 @@ class Order extends Controller{
         if($this->address->userAndAddressExists() and $this->user->isLoggedIn()){
 
 
-
-                    foreach ($this->userAddresses as $this->userAddress) {
-
-                    }
             if(Input::exists()){
                 if (Token::check(Input::get('token'))) {
-                    try {
-                        $this->user->order()->create(array(
-                            'hash' => $hash,
-                            'paid' => false,
-                            'total' => $this->basket->subTotal(),
-                            'customer_id' => $this->user->data()->id,
-                            'address_id' => $this->userAddress->id
-
-                        ));
-
-
-                    } catch (Exception $e) {
-                        die($e->getMessage());
-                    }
-
-                    $this->order->selectLastOrder();
-
-                    try {
-                        foreach ($this->basket->all() as $item) {
-
-                            $this->order->createOrder(array(
-                                'product_id' => $item->id,
-                                'order_id' => $this->order->data()->id,
-                                'quantity' => $item->quantity,
+                    $validate = new Validation();
+                    @$validation = $validate->check($_POST, array(
+                        'address_id' => array(
+                            'required' => true,
+                        )
+                    ));
+                    if ($validation->passed()) {
+                        try {
+                            $this->user->order()->create(array(
+                                'hash' => $hash,
+                                'paid' => false,
+                                'total' => $this->basket->subTotal(),
+                                'customer_id' => $this->user->data()->id,
+                                'address_id' => Input::get('address_id')
 
                             ));
 
+
+                        } catch (Exception $e) {
+                            die($e->getMessage());
                         }
 
+                        $this->order->selectLastOrder();
 
-                    } catch (Exception $e) {
-                        die($e->getMessage());
-                    }
+                        try {
+                            foreach ($this->basket->all() as $item) {
 
-                    $result = Braintree\Transaction::sale([
-                        'amount' => $this->basket->subTotal(),
-                        'paymentMethodNonce' => Input::get('payment_method_nonce'),
-                        'options' => [
-                            'submitForSettlement' => true
-                        ]
+                                $this->order->createOrder(array(
+                                    'product_id' => $item->id,
+                                    'order_id' => $this->order->data()->id,
+                                    'quantity' => $item->quantity,
 
-                    ]);
+                                ));
 
-                    $events= new Event;
-                    $events->loadEvent('OrderWasCreated');
-                    $event = new OrderWasCreated($this->order,$this->basket,$result);
+                            }
 
 
+                        } catch (Exception $e) {
+                            die($e->getMessage());
+                        }
 
-                    if(!$result->success){
+                        $result = Braintree\Transaction::sale([
+                            'amount' => $this->basket->subTotal(),
+                            'paymentMethodNonce' => Input::get('payment_method_nonce'),
+                            'options' => [
+                                'submitForSettlement' => true
+                            ]
 
-                        $event->attach($events->loadHandler('RecordFailedPayment'));
+                        ]);
+
+                        $events = new Event;
+                        $events->loadEvent('OrderWasCreated');
+                        $event = new OrderWasCreated($this->order, $this->basket, $result);
+
+
+                        if (!$result->success) {
+
+                            $event->attach($events->loadHandler('RecordFailedPayment'));
+                            $event->dispatch();
+
+                            Redirect::to(Url::path() . '/order/index');
+
+                        }
+
+                        if ($result->success) {
+
+                            Email::sendEmail(Input::get('username'), 'Your order summary!',
+                                'Your items' . $item->title . 'x' . $item->quantity . '<br>
+                                 Total' . $this->basket->subTotal() . ''
+                            );
+                        }
+
+                        $event->attach([
+
+                            $events->loadHandler('MarkOrderPaid'),
+                            $events->loadHandler('RecordSuccessfulPayment'),
+                            $events->loadHandler('UpdateStock'),
+                            $events->loadHandler('EmptyBasket')
+
+                        ]);
+
                         $event->dispatch();
 
-                        Redirect::to(Url::path().'/order/index');
-
+                        Redirect::to(Url::path() . '/order/show/' . $hash);
                     }
-
-                    $event->attach([
-
-                        $events->loadHandler('MarkOrderPaid'),
-                        $events->loadHandler('RecordSuccessfulPayment'),
-                        $events->loadHandler('UpdateStock'),
-                        $events->loadHandler('EmptyBasket')
-
-                    ]);
-
-                    $event->dispatch();
-
-                   Redirect::to(Url::path().'/order/show/'.$hash);
-
 
                 }
             }
@@ -388,12 +392,13 @@ class Order extends Controller{
 
                         }
 
-                      /*  if($result->success){
+                        if($result->success){
 
                             Email::sendEmail(Input::get('username'),'Your order summary!',
-                                'Your items'.$item->title.'x'.$item->quantity.'<br> Total'.$this->basket->subTotal() .''
+                                'Your items'.$item->title.'x'.$item->quantity.'<br>
+                                 Total'.$this->basket->subTotal() .''
                                 );
-                        } */
+                        }
 
                         $event->attach([
 
@@ -417,12 +422,12 @@ class Order extends Controller{
         }
 
 
-        $this->view('order/index',['user'=>$this->user->data(),'address'=>$this->address,'userAddress'=>$this->userAddress]);
+        $this->view('order/index',['user'=>$this->user->data(),'address'=>$this->address]);
     }
 
     public function show($hash = ''){
 
-        $this->order->selectLastOrder();
+       $this->order->selectLastOrder();
         $this->address->selectLastAddress();
 
         $orderHash = $this->order->data()->hash;
@@ -434,7 +439,13 @@ class Order extends Controller{
 
         $products = $this->product->joinProducts($this->order->data()->id);
 
-        $this->view('order/show',['address' => $this->address->dataFirst(),'product' => $products,'order' =>$this->order->data()]);
+        if($this->address->userAndAddressExists() and $this->user->isLoggedIn()) {
+            $this->address = $this->address->selectAddress($this->order->data()->address_id)[0];
+        }elseif($this->user->isLoggedIn() and $this->address->selectUserAddress()==false){
+            $this->address = $this->address->dataFirst();
+        }
+
+        $this->view('order/show',['address' => $this->address,'product' => $products,'order' =>$this->order->data()]);
     }
 
     public function update(){

@@ -177,7 +177,7 @@ class Main extends Controller{
             }
         }
 
-        $this->view('main/settings',['temp_password'=>$user->data()->temp_password]);
+        $this->view('main/settings',['user'=>$user->data()]);
     }
 
     public function recovery( $name = ''){

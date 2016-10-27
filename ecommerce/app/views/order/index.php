@@ -10,6 +10,7 @@
         <div class="col-md-12">
             <?php if($data['address']->userAndAddressExists()) :?>
             <div class="col-md-8 well">
+                <form action="<?php echo Url::path()?>/order/index" method="post">
                 <?php Validation::displayErrors(); ?>
                 <div class="row">
                 <div class="col-md-6">
@@ -23,27 +24,25 @@
                 </div>
                 <div class="col-md-6">
                     <h3>Your Adress</h3>
-                    <form action="<?php echo Url::path()?>/order/index" method="post" class="form-inline">
-                        <select name="addresses" class="form-control input-sm">
-                            <?php foreach( $data['address']->data() as $address):?>
-                                <option value="<?php echo $address->address1 ?>">
-                                    <?php echo $address->address1 ?></option>
-                            <?php endforeach;?>
-                        </select>
-                        <input type="submit" value="Select" class="btn btn-default btn-sm">
-                        <a href="<?php echo Url::path()?>/main/profile" type="button" class="btn btn-default btn-sm">add/delete</a>
-                    </form>
+                    <a href="<?php echo Url::path()?>/main/profile" type="button" class="btn btn-default btn-sm">add/delete</a>
+
                     <hr>
+                    <?php if(!empty($data['address'])) :?>
+                        <?php foreach ($data['address']->data() as $address): ?>
+                            <div class="col-md-6 ">
+                                <?php echo $address->address1 ?><br>
+                                <?php echo $address->address2 ?><br>
+                                <?php echo $address->post_code ?><br>
+                                <?php echo $address->city ?><br>
+                                <input type="radio" name="address_id" value="<?php echo $address->id ?>" class="">
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif;?>
 
-                    <label>Delivery Address:</label><br>
-                    <?php echo $data['userAddress']->address1 ?><br>
-                    <?php echo $data['userAddress']->address2 ?><br>
-                    <?php echo $data['userAddress']->post_code ?><br>
-                    <?php echo $data['userAddress']->city ?><br>
 
                 </div>
                 </div>
-                <form action="<?php echo Url::path()?>/order/index" method="post">
+
             <h3>Payments</h3>
 
             <hr>

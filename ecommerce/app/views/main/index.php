@@ -3,8 +3,10 @@
     <div class="row">
 
         <div class="col-md-12 text-center ">
+
             <?php Message::displayMessage();?>
             <div class="jumbotron">
+                
                 <p class="lead">"Si vis pacem, para bellum"<br>
                  "If you want peace, prepare for war"</p>
                 <p>Variety of full contact equipment, to ensure you can bring as much "Peace" as possible upon your enemies!</p>

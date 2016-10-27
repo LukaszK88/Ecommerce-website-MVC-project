@@ -41,6 +41,16 @@ class Address extends Model{
             return true;
         }
     }
+
+    public function selectAddress($id){
+        $addresses = $this->_db->get('addresses',array('id','=',$id));
+        if($addresses->count()){
+
+            $result = $addresses->results();
+
+            return $result;
+        }
+    }
     
     public function selectUserAddress(){
         $addresses = $this->_db->get('addresses',array('customer_id','=',$this->user()->data()->id));
