@@ -18,20 +18,21 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a class="dropdown-toggle"  data-toggle="dropdown">Products <span class="glyphicon glyphicon-triangle-bottom small"></span></a>
+                    <a class="dropdown-toggle"  data-toggle="dropdown">Shields <span class="glyphicon glyphicon-triangle-bottom small"></span></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
-                            <a class="test" tabindex="-1" href="#">Shields <span class="glyphicon glyphicon-triangle-right small"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/western-shields">West</a></li>
-                                <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/easter-shields">East</a></li>
-                            </ul>
+                            <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/western-shields">West</a></li>
+                            <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/easter-shields">East</a></li>
                         </li>
-                        <li class="dropdown-submenu">
-                            <a class="test" tabindex="-1" href="#">Armour <span class="glyphicon glyphicon-triangle-right small"></span></a>
+                    </ul>
+                </li>
+
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle"  data-toggle="dropdown">Armour <span class="glyphicon glyphicon-triangle-bottom small"></span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
-                                    <a class="test" href="#">1v1 <span class="glyphicon glyphicon-triangle-right small"></span></a>
+                                    <a class="test" tabindex="-1" href="#">1v1 <span class="glyphicon glyphicon-triangle-right small"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="<?php echo Url::path() ?>/categories/1v1-head">Head</a></li>
                                         <li><a href="<?php echo Url::path() ?>/categories/1v1-upperbody">Upper Body</a></li>
@@ -39,7 +40,7 @@
                                     </ul>
                                 </li>
                                 <li class="dropdown-submenu">
-                                    <a class="test" href="#">Bohurt <span class="glyphicon glyphicon-triangle-right small"></span></a>
+                                    <a class="test" tabindex="-1" href="#">Bohurt <span class="glyphicon glyphicon-triangle-right small"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="<?php echo Url::path() ?>/categories/bohurt-lowerbody">Head</a></li>
                                         <li><a href="<?php echo Url::path() ?>/categories/bohurt-upperbody">Upper Body</a></li>
@@ -47,23 +48,25 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
+                    </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle"  data-toggle="dropdown">Paddings <span class="glyphicon glyphicon-triangle-bottom small"></span></a>
+                    <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
-                            <a class="test" tabindex="-1" href="#">Padding <span class="glyphicon glyphicon-triangle-right small"></span></a>
-                            <ul class="dropdown-menu">
                                 <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/paddings-head">Head</a></li>
                                 <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/paddings-upperbody">Upper</a></li>
                                 <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/paddings-lowerbody">Lower</a></li>
-                            </ul>
                         </li>
-                        <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/others">Other</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a tabindex="-1" href="<?php echo Url::path() ?>/categories/others">Other</a>
+                </li>
+
                 <li>
                     <a href="<?php echo Url::path() ?>/main/about">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
                 </li>
                 <li>
                     <a href="<?php echo Url::path() ?>/main/contact">Contact</a>

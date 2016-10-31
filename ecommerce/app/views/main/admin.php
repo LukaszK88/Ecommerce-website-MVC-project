@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-4 text-center well">
         <?php Validation::displayErrors(); ?>
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="title">Item Name*:</label><br>
                     <input type="text"  name="title"  class="form-control" value="<?php echo !empty($data['productId']) ? $data['product'][0]->title : Input::get('title'); ?>" >
@@ -76,6 +76,11 @@
                     <label for="description">Item Description*:</label><br>
                     <textarea rows="8" cols="50" name="description" class="form-control"><?php echo !empty($data['productId']) ? $data['product'][0]->description : Input::get('description'); ?></textarea>
                 </div>
+                <div class="form-group">
+                    <label for="photo">Item Photo*:</label><br>
+                    <input type="file" class="form-control"  name="photo" value="<?php echo Input::get('photo'); ?>" >
+                </div>
+
                 <div class="form-group">
                     <label for="image">Item Photo path*:</label><br>
                     <input type="text" class="form-control"  name="image" value="<?php echo !empty($data['productId']) ? $data['product'][0]->image : Input::get('image'); ?>" >

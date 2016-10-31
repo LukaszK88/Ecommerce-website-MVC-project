@@ -231,6 +231,8 @@ class Main extends Controller{
         if(!empty($productId)){
             $this->product = $this->products->selectProducts($categorySlug);
 
+
+
             if (Input::exists()) {
                 if (Token::check(Input::get('token'))) {
                     $validate = new Validation();
@@ -287,8 +289,7 @@ class Main extends Controller{
                                 'stock' => Input::get('stock'),
                                 'image' => Input::get('image')
                             ));
-                            Message::setMessage('Product updated', 'success');
-                            Redirect::to(Url::path() . '/categories/' .$categorySlug);
+                            
 
                         } catch (Exception $e) {
                             die($e->getMessage());
@@ -299,8 +300,27 @@ class Main extends Controller{
             }
 
 
+            if(isset($_FILES['photo']['name'])) {
+                if(!empty($_FILES['photo']['name'])) {
+                    $name = $_FILES['photo']['name'];
+                    $tmp_name = $_FILES['photo']['tmp_name'];
+                    $location =  'images/';
+                    if (move_uploaded_file($tmp_name, $location . $name)) {
+
+                        Message::setMessage('Product updated', 'success');
+                        Redirect::to(Url::path() . '/categories/' .$categorySlug);
+
+                    }else{
+                        Message::setMessage('Update failed', 'error');
+                        Redirect::to(Url::path() . '/categories/' .$categorySlug);
+                    }
+                }
+            }
+
+
 
         }else {
+
 
             if (Input::exists()) {
                 if (Token::check(Input::get('token'))) {
@@ -359,14 +379,28 @@ class Main extends Controller{
                                 'image' => Input::get('image')
                             ));
 
-                            Message::setMessage('Product uploaded', 'success');
-                            Redirect::to(Url::path() . '/main/admin');
-
                         } catch (Exception $e) {
                             die($e->getMessage());
                         }
                     }
 
+                }
+            }
+
+            if(isset($_FILES['photo']['name'])) {
+                if(!empty($_FILES['photo']['name'])) {
+                    $name = $_FILES['photo']['name'];
+                    $tmp_name = $_FILES['photo']['tmp_name'];
+                    $location =  'images/';
+                    if (move_uploaded_file($tmp_name, $location . $name)) {
+
+                        Message::setMessage('Product uploaded', 'success');
+                        Redirect::to(Url::path() . '/main/admin');
+
+                    }else{
+                        Message::setMessage('Upload failed', 'error');
+                        Redirect::to(Url::path() . '/main/admin');
+                    }
                 }
             }
         }
