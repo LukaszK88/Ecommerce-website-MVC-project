@@ -18,9 +18,9 @@ class Categories extends Controller{
 
     public function index($subCategory = ''){
 
-
         $this->productList = $this->products->selectProducts($subCategory);
         if(empty($this->productList)){
+            Message::setMessage('There is no items in this category','error');
             Redirect::to(Url::path().'/main/index');
         }
 

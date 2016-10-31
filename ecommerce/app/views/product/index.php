@@ -18,7 +18,7 @@
                 <div class="caption-full">
 
                     <?php if($data['products']->outOfStock()) :?>
-                    <span class="label label-danger"> Out of stock</span>
+                    <span class="label label-danger"> Made to Order</span>
 
                         <?php if($data['user']->isLoggedIn() and $data['user']->hasPermission('admin')): ?>
                             <form action="" method="post" class="form-inline">

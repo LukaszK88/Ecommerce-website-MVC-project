@@ -78,7 +78,7 @@
                 </div>
                 <div class="form-group">
                     <label for="photo">Item Photo*:</label><br>
-                    <input type="file" class="form-control"  name="photo" value="<?php echo Input::get('photo'); ?>" >
+                    <input type="file" class="form-control"  name="photo" value="" >
                 </div>
 
                 <div class="form-group">
