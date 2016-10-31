@@ -20,7 +20,7 @@ class Main extends Controller{
     }
 
     public function index($name = ''){
-        
+
         $this->view('main/index');
 
     }
@@ -471,10 +471,7 @@ class Main extends Controller{
         $this->view('main/profile',['user'=>$this->user->data(),'addresses'=>$this->address->data()]);
     }
 
-    public function contact($name = '')
-    {
-
-
+    public function contact($name = ''){
         if (Input::exists()) {
             if (Token::check(Input::get('token'))) {
                 $validate = new Validation();

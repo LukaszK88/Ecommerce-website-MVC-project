@@ -1,14 +1,14 @@
 <!-- /.container -->
 
-<div class="container">
+<div class="container-fluid">
 
     
 <!-- Footer -->
 <footer >
-    <div class="footer navbar-fixed-bottom">
+    <div class="footer navbar pull-left">
     <div class="row">
         <div class="col-lg-12 ">
-            <p>Copyright &copy; Lukasz Kowal 2016</p>
+            <font color="white" ><p>Copyright &copy; Lukasz Kowal 2016</p></font>
         </div>
     </div>
         </div>

@@ -8,10 +8,10 @@
 $GLOBALS['config'] = array(
 
     'mysql'    => array(
-        'host'                      => '127.0.0.1',     // database hostname or IP address
-        'username'                  => 'root',          // username 
-        'password'                  => '',              // password
-        'db'                        => 'ecommerce',          // database name
+        'host'                      => getenv('DB_HOST'),     // database hostname or IP address
+        'username'                  => getenv('DB_USERNAME'),          // username
+        'password'                  => getenv('DB_PASSWORD'),              // password
+        'db'                        => getenv('DB_DB'),          // database name
     ),
     'remember'=>array(
         'cookie_name'=> 'hash',

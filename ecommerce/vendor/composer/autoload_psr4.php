@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ecommerce\\' => array($baseDir . '/app'),
+    'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Braintree\\' => array($vendorDir . '/braintree/braintree_php/lib/Braintree'),
 );

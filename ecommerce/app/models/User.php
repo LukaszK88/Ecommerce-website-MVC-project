@@ -162,6 +162,7 @@ class User extends Model{
         return $this->order;
 
     }
+    
 
     public function isLoggedIn(){
         return $this->_isLoggedIn;

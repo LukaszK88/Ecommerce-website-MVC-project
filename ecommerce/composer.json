@@ -1,6 +1,7 @@
 {
     "require": {
-        "braintree/braintree_php": "^3.17"
+        "braintree/braintree_php": "^3.17",
+        "vlucas/phpdotenv": "^2.4"
     },
     "autoload":{
         "psr-4":{
