@@ -16,19 +16,19 @@
                 <form action="" method="POST">
                         <div class="form-group">
                             <label for="name">Name:</label><br>
-                            <input type="text"  id="name" name="name" value="<?php echo !empty($data['user']->name) ? $data['user']->name : Input::get('name'); ?>">
+                            <input type="text"  id="name" name="name" placeholder="Name" value="<?php echo !empty($data['user']->name) ? $data['user']->name : Input::get('name'); ?>">
                         </div>
                         <div class="form-group">
                             <label for="password_current">Current Password:</label><br>
-                            <input type="password"  id="password_current" name="password_current" value="<?php echo !empty($data['user']->temp_password) ? $data['user']->temp_password : Input::get('password_current'); ?>">
+                            <input type="password"  id="password_current" name="password_current" placeholder="Current Password" value="<?php echo !empty($data['user']->temp_password) ? $data['user']->temp_password : Input::get('password_current'); ?>">
                         </div>
                         <div class="form-group">
                             <label for="new_password">New Password:</label><br>
-                            <input type="password"  id="new_password" name="new_password" value="">
+                            <input type="password"  id="new_password" name="new_password" placeholder="New Password" value="">
                         </div>
                         <div class="form-group">
                             <label for="new_password_again">New Password Again:</label><br>
-                            <input type="password"  id="new_password_again" name="new_password_again" value="">
+                            <input type="password"  id="new_password_again" name="new_password_again" placeholder="Repeat New Password" value="">
                         </div>
 
                         <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">

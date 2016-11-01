@@ -90,19 +90,19 @@
                         <hr>
                         <div class="form-group">
                             <label for="address1">Address1*:</label><br>
-                            <input type="text"  name="address1" class="form-control" value="<?php echo Input::get('address1'); ?>" >
+                            <input type="text"  name="address1" class="form-control" placeholder="Address line 1" value="<?php echo Input::get('address1'); ?>" >
                         </div>
                         <div class="form-group">
                             <label for="address2">Address2:</label><br>
-                            <input type="text"  name="address2" class="form-control" value="<?php echo Input::get('address2'); ?>" >
+                            <input type="text"  name="address2" class="form-control" placeholder="Address line 2" value="<?php echo Input::get('address2'); ?>" >
                         </div>
                         <div class="form-group">
                             <label for="city">City*:</label><br>
-                            <input type="text"  name="city" class="form-control" value="<?php echo Input::get('city'); ?>" >
+                            <input type="text"  name="city" class="form-control" placeholder="City" value="<?php echo Input::get('city'); ?>" >
                         </div>
                         <div class="form-group">
                             <label for="post_code">Post code*:</label><br>
-                            <input type="text"  name="post_code" class="form-control" value="<?php echo Input::get('post_code'); ?>" >
+                            <input type="text"  name="post_code" class="form-control" placeholder="Post Code" value="<?php echo Input::get('post_code'); ?>" >
                         </div>
 
                     </div>
@@ -146,11 +146,11 @@
 
                             <div class="form-group">
                                 <label for="username">Email*:</label><br>
-                                <input type="text"  name="username" class="form-control" value="<?php echo Input::get('username'); ?>" >
+                                <input type="text"  name="username" class="form-control" placeholder="Email" value="<?php echo Input::get('username'); ?>" >
                             </div>
                             <div class="form-group">
                                 <label for="name">Name*:</label><br>
-                                <input type="text"  name="name" class="form-control" value="<?php echo Input::get('name'); ?>" >
+                                <input type="text"  name="name" class="form-control" placeholder="Name" value="<?php echo Input::get('name'); ?>" >
                             </div>
                         </div>
 
@@ -159,19 +159,19 @@
                             <hr>
                             <div class="form-group">
                                 <label for="address1">Address1*:</label><br>
-                                <input type="text"  name="address1" class="form-control" value="<?php echo Input::get('address1'); ?>" >
+                                <input type="text"  name="address1" class="form-control" placeholder="Address line 1" value="<?php echo Input::get('address1'); ?>" >
                             </div>
                             <div class="form-group">
                                 <label for="address2">Address2:</label><br>
-                                <input type="text"  name="address2" class="form-control" value="<?php echo Input::get('address2'); ?>" >
+                                <input type="text"  name="address2" class="form-control" placeholder="Address line 2" value="<?php echo Input::get('address2'); ?>" >
                             </div>
                             <div class="form-group">
                                 <label for="city">City*:</label><br>
-                                <input type="text"  name="city" class="form-control" value="<?php echo Input::get('city'); ?>" >
+                                <input type="text"  name="city" class="form-control" placeholder="City" value="<?php echo Input::get('city'); ?>" >
                             </div>
                             <div class="form-group">
                                 <label for="post_code">Post code*:</label><br>
-                                <input type="text"  name="post_code" class="form-control" value="<?php echo Input::get('post_code'); ?>" >
+                                <input type="text"  name="post_code" class="form-control" placeholder="Post Code" value="<?php echo Input::get('post_code'); ?>" >
                             </div>
 
                         </div>

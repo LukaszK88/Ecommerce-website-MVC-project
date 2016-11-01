@@ -69,7 +69,7 @@
                     <a href="<?php echo Url::path() ?>/main/about">About</a>
                 </li>
                 <li>
-                    <a href="<?php echo Url::path() ?>/main/contact">Contact</a>
+                    <a href="<?php echo Url::path() ?>/main/contact"><i class="glyphicon glyphicon-envelope"></i> Contact</a>
                 </li>
 
             </ul>
@@ -77,36 +77,36 @@
             <ul class="nav navbar-nav navbar-right">
                <?php if(!Session::exists('user')) : ?>
                 <li>
-                    <a href="<?php echo Url::path() ?>/main/login">Login</a>
+                    <a href="<?php echo Url::path() ?>/main/login"><i class="glyphicon glyphicon-log-in"></i> Login</a>
                 </li>
 
                 <li>
-                    <a href="<?php echo Url::path() ?>/main/register">Register</a>
+                    <a href="<?php echo Url::path() ?>/main/register"><i class="glyphicon glyphicon-user"></i> Register</a>
                 </li>
                 <?php else :?>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo Session::get('username');?> <b class="glyphicon glyphicon-triangle-bottom small"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php echo Session::get('username');?> <b class="glyphicon glyphicon-triangle-bottom small"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="<?php echo Url::path() ?>/main/profile"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href="<?php echo Url::path() ?>/main/profile"><i class="glyphicon glyphicon-edit "></i> Profile</a>
                         </li>
                         <li>
-                            <a href="<?php echo Url::path() ?>/main/settings"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href="<?php echo Url::path() ?>/main/settings"><i class="glyphicon glyphicon-cog "></i> Settings</a>
                         </li>
                         <?php if(Session::exists('admin')) : ?>
                         <li class="divider"></li>
                         <li>
-                            <a href="<?php echo Url::path() ?>/main/admin"><i class="fa fa-fw fa-power-off"></i> Admin</a>
+                            <a href="<?php echo Url::path() ?>/main/admin"><i class="glyphicon glyphicon-flash "></i> Admin</a>
                         </li>
                         <?php endif ;?>
                         <li class="divider"></li>
                         <li>
-                            <a href="<?php echo Url::path() ?>/main/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="<?php echo Url::path() ?>/main/logout"><i class="glyphicon glyphicon-log-out "></i> Log Out</a>
                         </li>
                     </ul>
                 <?php endif ;?>
                         <li>
-                            <a href="<?php echo Url::path() ?>/cart/index"><i class="fa fa-fw fa-cart"></i> Cart (<?php echo $basket->itemCount();?>)</a>
+                            <a href="<?php echo Url::path() ?>/cart/index"><i class="glyphicon glyphicon-shopping-cart"></i> Cart (<?php echo $basket->itemCount();?>)</a>
                         </li>
             </ul>
         </div>

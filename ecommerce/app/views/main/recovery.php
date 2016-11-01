@@ -16,7 +16,7 @@
             <form action="" method="POST">
                 <div class="form-group">
                     <label for="username">Email:</label><br>
-                    <input type="text"  id="username" name="username">
+                    <input type="text"  id="username" name="username" placeholder="Email">
                 </div>
 
                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">

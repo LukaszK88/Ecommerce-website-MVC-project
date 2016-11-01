@@ -18,20 +18,20 @@
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="title">Item Name*:</label><br>
-                    <input type="text"  name="title"  class="form-control" value="<?php echo !empty($data['productId']) ? $data['product'][0]->title : Input::get('title'); ?>" >
+                    <input type="text"  name="title"  class="form-control" placeholder="Item name" value="<?php echo !empty($data['productId']) ? $data['product'][0]->title : Input::get('title'); ?>" >
                 </div>
                 <div class="form-group">
                     <label for="slug">Item Name-Slug*:</label><br>
-                    <input type="text"  name="slug"  class="form-control" value="<?php echo !empty($data['productId']) ? $data['product'][0]->slug : Input::get('slug'); ?>" >
+                    <input type="text"  name="slug"  class="form-control" placeholder="Item-name" value="<?php echo !empty($data['productId']) ? $data['product'][0]->slug : Input::get('slug'); ?>" >
                 </div>
                 <div class="form-group">
                     <label for="price">Item Price*:</label><br>
-                    <input type="text"  name="price" class="form-control" value="<?php echo !empty($data['productId']) ? $data['product'][0]->price : Input::get('price'); ?>" >
+                    <input type="text"  name="price" class="form-control" placeholder="Price" value="<?php echo !empty($data['productId']) ? $data['product'][0]->price : Input::get('price'); ?>" >
                 </div>
                 <div class="form-group">
                     <label for="category">Item Category*:</label><br>
 
-                    <select name="category" class="form-control"  >
+                    <select name="category" class="form-control" >
                         <option >Western Shields</option>
                         <option >Eastern Shields</option>
                         <option >1v1 Head</option>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Item Description*:</label><br>
-                    <textarea rows="8" cols="50" name="description" class="form-control"><?php echo !empty($data['productId']) ? $data['product'][0]->description : Input::get('description'); ?></textarea>
+                    <textarea rows="8" cols="50" name="description" placeholder="Type description" class="form-control"><?php echo !empty($data['productId']) ? $data['product'][0]->description : Input::get('description'); ?></textarea>
                 </div>
                 <div class="form-group">
                     <label for="photo">Item Photo*:</label><br>
@@ -83,7 +83,7 @@
 
                 <div class="form-group">
                     <label for="image">Item Photo path*:</label><br>
-                    <input type="text" class="form-control"  name="image" value="<?php echo !empty($data['productId']) ? $data['product'][0]->image : Input::get('image'); ?>" >
+                    <input type="text" class="form-control"  name="image" placeholder="http://www.lukasz-pt.com/public/images/" value="<?php echo !empty($data['productId']) ? $data['product'][0]->image : Input::get('image'); ?>" >
                 </div>
                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
                 <button type="submit" name="submit" class="btn btn-default"><?php echo !empty($data['productId']) ? 'Update Product' :'Add Product' ;?></button><br><br>

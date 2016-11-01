@@ -16,19 +16,19 @@
                 <div class="form-group ">
 
                     <label for="name">First name*:</label><br>
-                    <input type="text"  class="form-control" name="name" value="<?php echo ($data['user']->isLoggedIn()) ? $data['user']->data()->name : Input::get('name'); ?>">
+                    <input type="text"  class="form-control" name="name" placeholder="Name" value="<?php echo ($data['user']->isLoggedIn()) ? $data['user']->data()->name : Input::get('name'); ?>">
                 </div>
                 <div class="form-group">
                     <label for="last_name">Last name:</label><br>
-                    <input type="text" class="form-control" name="last_name" value="<?php echo Input::get('last_name');?>" >
+                    <input type="text" class="form-control" name="last_name" placeholder="Last Name" value="<?php echo Input::get('last_name');?>" >
                 </div>
                 <div class="form-group">
                     <label for="email">Email*:</label><br>
-                    <input type="text" class="form-control"  name="email" value="<?php echo ($data['user']->isLoggedIn()) ? $data['user']->data()->username : Input::get('username'); ?>" >
+                    <input type="text" class="form-control"  name="email" placeholder="Email" value="<?php echo ($data['user']->isLoggedIn()) ? $data['user']->data()->username : Input::get('username'); ?>" >
                 </div>
                 <div class="form-group">
                     <label for="message">Message*:</label><br>
-                    <textarea rows="8" cols="50" class="form-control" name="message"><?php echo Input::get('message');?></textarea>
+                    <textarea rows="8" cols="50" class="form-control" placeholder="Your Message" name="message"><?php echo Input::get('message');?></textarea>
                 </div>
 
                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
