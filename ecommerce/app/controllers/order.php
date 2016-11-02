@@ -151,7 +151,7 @@ class Order extends Controller{
                         'address1' => array(
                             //'unique' => 'addresses',
                             'required' => true,
-                            'min' => 10,
+                            'min' => 4,
                             'max' => 150,
                         ),
                         'city' => array(
@@ -278,7 +278,7 @@ class Order extends Controller{
                         'address1' => array(
                             //'unique' => 'addresses',
                             'required' => true,
-                            'min' => 10,
+                            'min' => 4,
                             'max' => 150,
                         ),
                         'city' => array(

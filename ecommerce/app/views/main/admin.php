@@ -29,6 +29,18 @@
                     <input type="text"  name="price" class="form-control" placeholder="Price" value="<?php echo !empty($data['productId']) ? $data['product'][0]->price : Input::get('price'); ?>" >
                 </div>
                 <div class="form-group">
+                    <label for="main_category">Item Main Category*:</label><br>
+
+                    <select name="main_category" class="form-control" >
+                        <option >Shields</option>
+                        <option >Armours</option>
+                        <option >Paddings</option>
+                        <option >Others</option>
+                        <?php echo !empty($data['productId']) ? '<option selected="selected">'.$data['product'][0]->main_category.'</option>' : '<option selected="selected">'.Input::get('main_category').'</option>'; ?>
+                    </select>
+
+                </div>
+                <div class="form-group">
                     <label for="category">Item Category*:</label><br>
 
                     <select name="category" class="form-control" >
@@ -86,7 +98,7 @@
                     <input type="text" class="form-control"  name="image" placeholder="http://www.lukasz-pt.com/public/images/" value="<?php echo !empty($data['productId']) ? $data['product'][0]->image : Input::get('image'); ?>" >
                 </div>
                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-                <button type="submit" name="submit" class="btn btn-default"><?php echo !empty($data['productId']) ? 'Update Product' :'Add Product' ;?></button><br><br>
+                <button type="submit" name="submit" class="btn btn-success"><?php echo !empty($data['productId']) ? 'Update Product' :'Add Product' ;?></button><br><br>
                 <p>*- Required fields</p>
             </form>
         </div>

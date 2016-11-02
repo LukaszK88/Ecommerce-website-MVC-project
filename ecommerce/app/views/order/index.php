@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-12">
             <?php if($data['address']->userAndAddressExists()) :?>
-            <div class="col-md-8 well">
+            <div class="col-md-8 well ">
                 <form action="<?php echo Url::path()?>/order/index" method="post">
                 <?php Validation::displayErrors(); ?>
                 <div class="row">
@@ -23,8 +23,8 @@
                     <p><?php echo $data['user']->name ?></p><br>
                 </div>
                 <div class="col-md-6">
-                    <h3>Your Adress</h3>
-                    <a href="<?php echo Url::path()?>/main/profile" type="button" class="btn btn-default btn-sm">add/delete</a>
+                    <h3>Your Adress <a href="<?php echo Url::path()?>/main/profile" type="button" class="btn btn-warning btn-sm">add/delete</a></h3>
+
 
                     <hr>
                     <?php if(!empty($data['address'])) :?>
@@ -50,6 +50,9 @@
             <div id="payment">
 
             </div>
+                    <hr>
+
+                    <button type="submit" name="submit" class="btn btn-success">Place order</button>
 
         </div>
 
@@ -64,7 +67,7 @@
                 <?php include '../app/views/cart/partials/summary.php'?>
 
                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-                <button type="submit" name="submit" class="btn btn-default">Place order</button>
+                <button type="submit" name="submit" class="btn btn-success">Place order</button>
             </div>
         </div>
 
@@ -116,6 +119,10 @@
 
                 </div>
 
+                <hr>
+
+                <button type="submit" name="submit" class="btn btn-success">Place order</button>
+
             </div>
 
                 <div class="col-md-4">
@@ -129,7 +136,7 @@
                         <?php include '../app/views/cart/partials/summary.php'?>
 
                         <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-                        <button type="submit" name="submit" class="btn btn-default">Place order</button>
+                        <button type="submit" name="submit" class="btn btn-success">Place order</button>
                     </div>
                 </div>
 
@@ -186,6 +193,10 @@
 
                     </div>
 
+                    <hr>
+
+                    <button type="submit" name="submit" class="btn btn-success">Place order</button>
+
                 </div>
 
                 <div class="col-md-4">
@@ -199,7 +210,7 @@
                         <?php include '../app/views/cart/partials/summary.php'?>
 
                         <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-                        <button type="submit" name="submit" class="btn btn-default">Place order</button>
+                        <button type="submit" name="submit" class="btn btn-success">Place order</button>
                     </div>
                 </div>
 

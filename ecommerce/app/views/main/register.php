@@ -15,7 +15,7 @@
                 <input type="text"  name="username" placeholder="Email" value="<?php echo Input::get('username'); ?>" >
             </div>
             <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-            <button type="submit" name="submit" class="btn btn-default">Register</button><br><br>
+            <button type="submit" name="submit" class="btn btn-success">Register</button><br><br>
             <p>*- Required fields</p>
         </form>
         </div>

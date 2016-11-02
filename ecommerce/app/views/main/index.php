@@ -12,48 +12,68 @@
                 <p>Variety of full contact equipment, to ensure you can bring as much "Peace" as possible upon your enemies!</p>
             </div>
         </div>
+    </div>
 
-        </div>
-    <div class="row">
+    <div class="row text-center">
 
-        <div class="col-md-12 text-center">
+        <div class="col-md-3 col-sm-6 hero-feature">
+            <div class="thumbnail">
 
-            <div class="row carousel-holder">
 
-                <div class="col-md-12">
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="item active ">
-                                <img class="img-responsive" src="<?php echo Url::path() ?>/images/glove1.jpg"  alt="">
-                            </div>
-                            <div class="item">
-                                <img class="slide-image" src="<?php echo Url::path() ?>/images/glove2.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img class="slide-image" src="<?php echo Url::path() ?>/images/padding1.jpg" alt="">
-                            </div>
-                        </div>
-                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left"></span>
-                        </a>
-                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                        </a>
-                    </div>
+                <a href="<?php echo Url::path()?>/categories/Shields"><img src="<?php echo $data['shields'][0]->image ?>" alt=""></a>
+
+
+                <div class="caption">
+                    <h3>Shields</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p>
+                        <a href="<?php echo Url::path()?>/categories/Shields" class="btn btn-success">Shop Now!</a>
+                    </p>
                 </div>
-
             </div>
+        </div>
 
- 
+        <div class="col-md-3 col-sm-6 hero-feature">
+            <div class="thumbnail">
+                <a href="<?php echo Url::path()?>/categories/Armours"><img src="<?php echo $data['armours'][0]->image ?>" alt=""></a>
+                <div class="caption">
+                    <h3>Armour</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p>
+                        <a href="<?php echo Url::path()?>/categories/Armours" class="btn btn-success">Shop Now!</a>
+                    </p>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-md-3 col-sm-6 hero-feature">
+            <div class="thumbnail">
+                <a href="<?php echo Url::path()?>/categories/Paddings"><img src="<?php echo $data['paddings'][0]->image ?>" alt=""></a>
+                <div class="caption">
+                    <h3>Paddings</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p>
+                        <a href="<?php echo Url::path()?>/categories/Paddings" class="btn btn-success">Shop Now!</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 hero-feature">
+            <div class="thumbnail">
+                <a href="<?php echo Url::path()?>/categories/Other"><img src="<?php echo $data['others'][0]->image ?>" alt=""></a>
+                <div class="caption">
+                    <h3>Other</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p>
+                        <a href="<?php echo Url::path()?>/categories/Other" class="btn btn-success">Shop Now!</a>
+                    </p>
+                </div>
+            </div>
         </div>
 
     </div>
+
 
 </div>
 

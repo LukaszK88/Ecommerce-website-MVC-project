@@ -43,6 +43,11 @@ class Products extends Model{
         return $products->results();
     }
 
+    public function selectProductsByMainCategory($category){
+        $products = $this->_db->get('products',array('main_category','=',$category));
+        return $products->results();
+    }
+
     public function joinProducts($order_id){
         $products = $this->_db->joinProducts($order_id);
         return $products;

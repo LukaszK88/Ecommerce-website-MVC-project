@@ -13,8 +13,8 @@
 
                 <h3>Your Details</h3>
                 <hr>
-                <label for="username">Username: </label> <?php echo $data['user']->username ?><br>
-                <label for="username">Name: </label> <?php echo $data['user']->name ?><br>
+                <label for="username">Username: </label> <?php echo $data['user']->username ?> <a href="<?php echo Url::path()?>/main/update/username" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span></a><br>
+                <label for="name">Name: </label> <?php echo $data['user']->name ?> <a href="<?php echo Url::path()?>/main/update/name" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span></a><br>
 
 
             </div>
@@ -43,7 +43,7 @@
                         </div>
 
                             <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-                            <button type="submit" name="add" class="btn btn-default btn-sm">Add</button>
+                            <button type="submit" name="add" class="btn btn-success btn-sm">Add</button>
                         </form>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                     <?php echo $address->address2 ?><br>
                                     <?php echo $address->post_code ?><br>
                                     <?php echo $address->city ?><br>
-                                    <button type="submit" name="delete" value="<?php echo $address->id ?>" class="btn btn-default btn-sm">Delete</button>
+                                    <button type="submit" name="delete" value="<?php echo $address->id ?>" class="btn btn-danger btn-sm">Delete</button>
                                 </div>
                             <?php endforeach; ?>
                     </div>

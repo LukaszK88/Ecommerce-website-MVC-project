@@ -20,12 +20,18 @@ class Categories extends Controller{
 
         $this->productList = $this->products->selectProducts($subCategory);
         if(empty($this->productList)){
-            Message::setMessage('There is no items in this category','error');
-            Redirect::to(Url::path().'/main/index');
+
+            $this->productList = $this->products->selectProductsByMainCategory($subCategory);
+
+        }
+        if(empty($this->productList)) {
+
+            Message::setMessage('There is no items in this category', 'error');
+            Redirect::to(Url::path() . '/main/index');
         }
 
 
-        $this->view('categories/index',['product'=>$this->productList, 'review'=>$this->products, 'user'=>$this->user]);
+        $this->view('categories/index',['product'=>$this->productList, 'review'=>$this->products, 'user'=>$this->user , 'urlCategory' => $subCategory]);
     }
 
     public function delete($itemId = '',$categorySlug = ''){

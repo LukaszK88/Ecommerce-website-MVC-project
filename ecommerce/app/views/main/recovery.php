@@ -20,7 +20,7 @@
                 </div>
 
                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-                <button type="submit" name="submit" class="btn btn-default">Send</button>
+                <button type="submit" name="submit" class="btn btn-success">Send</button>
 
             </form>
              </div>

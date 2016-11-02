@@ -21,7 +21,12 @@ class Main extends Controller{
 
     public function index($name = ''){
 
-        $this->view('main/index');
+        $shields = $this->products->selectProductsByMainCategory('Shields');
+        $paddings = $this->products->selectProductsByMainCategory('Paddings');
+        $armours = $this->products->selectProductsByMainCategory('Armours');
+        $others = $this->products->selectProductsByMainCategory('Others');
+
+        $this->view('main/index',['shields'=>$shields,'paddings'=>$paddings,'armours'=>$armours,'others'=>$others]);
 
     }
 
@@ -131,11 +136,6 @@ class Main extends Controller{
 
                 $validate = new Validation();
                 $validation = $validate->check($_POST,array(
-                    'name'=>array(
-                        'required'=> true,
-                        'min'=> 4,
-                        'max'=> 50
-                    ),
                     'password_current'=>array(
                         'required'=> true,
                         'min'=> 6
@@ -252,6 +252,11 @@ class Main extends Controller{
                             'min' => 1,
                             'max' => 20,
                         ),
+                        'main_category' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
                         'category' => array(
                             'required' => true,
                             'min' => 4,
@@ -283,6 +288,7 @@ class Main extends Controller{
                                 'title' => Input::get('title'),
                                 'slug' => Input::get('slug'),
                                 'price' => Input::get('price'),
+                                'main_category' => Input::get('main_category'),
                                 'category' => Input::get('category'),
                                 'category_slug' => Input::get('category_slug'),
                                 'description' => Input::get('description'),
@@ -341,6 +347,11 @@ class Main extends Controller{
                             'min' => 1,
                             'max' => 20,
                         ),
+                        'main_category' => array(
+                            'required' => true,
+                            'min' => 4,
+                            'max' => 255,
+                        ),
                         'category' => array(
                             'required' => true,
                             'min' => 4,
@@ -372,6 +383,7 @@ class Main extends Controller{
                                 'title' => Input::get('title'),
                                 'slug' => Input::get('slug'),
                                 'price' => Input::get('price'),
+                                'main_category' => Input::get('main_category'),
                                 'category' => Input::get('category'),
                                 'category_slug' => Input::get('category_slug'),
                                 'description' => Input::get('description'),
@@ -516,6 +528,68 @@ class Main extends Controller{
     public function about(){
 
         $this->view('main/about');
+    }
+
+    public function update($update = ''){
+
+    if($update == 'username') {
+        if (Input::exists()) {
+            if (Token::check(Input::get('token'))) {
+                $validate = new Validation();
+                $validation = $validate->check($_POST, array(
+                    'username' => array(
+                        'required' => true,
+                        //'email' => true,
+                        'unique' => 'users',
+                        'min' => 4,
+                        'max' => 60,
+                    ),
+                ));
+                if ($validation->passed()) {
+                    try {
+                        $this->user->update(array(
+                            'username' => Input::get('username')
+                        ));
+
+                        Message::setMessage('You have updated your username!','success' );
+                        Redirect::to(Url::path().'/main/profile');
+
+                    } catch (Exception $e) {
+                        die($e->getMessage());
+                    }
+                }
+            }
+        }
+    }elseif ($update == 'name'){
+        if (Input::exists()) {
+            if (Token::check(Input::get('token'))) {
+                $validate = new Validation();
+                $validation = $validate->check($_POST, array(
+                    'name' => array(
+                        'required' => true,
+                        //'email' => true,
+                        'min' => 4,
+                        'max' => 60,
+                    ),
+                ));
+                if ($validation->passed()) {
+                    try {
+                        $this->user->update(array(
+                            'name' => Input::get('name')
+                        ));
+
+                        Message::setMessage('You have updated your name!','success' );
+                        Redirect::to(Url::path().'/main/profile');
+
+                    } catch (Exception $e) {
+                        die($e->getMessage());
+                    }
+                }
+            }
+        }
+    }
+
+        $this->view('main/update',['update'=>$update,'user'=>$this->user->data()]);
     }
     
 }

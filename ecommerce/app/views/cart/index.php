@@ -36,7 +36,8 @@
                                             <?php endfor;?>
                                                 <option value="0">none</option>
                                         </select>
-                                        <input type="submit" value="Update" class="btn btn-default btn-sm">
+                                        <input type="submit" value="Update" class="btn btn-success btn-sm">
+                                        <a href="<?php echo Url::path()?>/cart/delete/<?php echo $item->slug ?>" class="btn btn-danger btn-sm pull-right"><span class="glyphicon glyphicon-remove-circle "></span></a>
                                     </form>
                                 </td>
                             </tr>
@@ -45,10 +46,15 @@
                         <?php endforeach ?>
                         </tbody>
                     </table>
+
+                    <hr>
+
+                    <a href="<?php echo Url::path()?>/main/index" class="btn btn-success">Continue shopping</a>
+
                 </div>
             <?php else: ?>
                 <div class="col-md-4 col-md-offset-4 well">
-                You have no items in your Basket <a href="<?php echo Url::path()?>/main/index">start</a> shopping NOW!
+                You have no items in your basket <a href="<?php echo Url::path()?>/main/index">start</a> shopping now!
                 </div>
             <?php endif; ?>
         </div>
@@ -61,7 +67,7 @@
 
                     <?php include '../app/views/cart/partials/summary.php'?>
 
-                    <a href="<?php echo Url::path()?>/order/index" class="btn btn-default">Check out</a>
+                    <a href="<?php echo Url::path()?>/order/index" class="btn btn-success">Check out</a>
                 </div>
             <?php endif;?>
         </div>

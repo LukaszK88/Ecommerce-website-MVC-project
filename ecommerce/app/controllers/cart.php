@@ -58,4 +58,20 @@ class Cart extends Controller{
         $this->view('cart/update');
     }
 
+    public function delete($slug = ''){
+
+        $product = $this->products->compareSlug($slug);
+
+        if(!$product){
+            Redirect::to(Url::path().'/main/index');
+        }else{
+
+            $this->basket->remove($product);
+        }
+
+        Redirect::to(Url::path().'/cart/index');
+
+        $this->view('cart/delete');
+    }
+
 }
