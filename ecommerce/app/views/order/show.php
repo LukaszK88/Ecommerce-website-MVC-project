@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 well">
-
+            <?php Message::displayMessage(); ?>
                 <h3>Order#<?php echo $data['order']->id ?></h3>
                 <hr>
             <div class="row">

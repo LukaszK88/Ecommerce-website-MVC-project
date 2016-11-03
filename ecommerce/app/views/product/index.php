@@ -60,7 +60,8 @@
                     <p><?php echo $data['product']->description ?></p>
                     <?php if($data['products']->inStock()) :?>
                         <a href="<?php echo Url::path() ?>/cart/add/<?php echo $data['product']->slug?>/1" class="btn btn-success btn-sm">Add to cart</a>
-                        <?php elseif($data['products']->outOfStock()) : ?>
+                    <?php endif;?>
+                        <?php if ($data['products']->outOfStock()) : ?>
                         <a href="<?php echo Url::path() ?>/product/enquiry/<?php echo $data['product']->slug?>" class="btn btn-success btn-sm">Item enquiry</a>
                     <?php endif;?>
                 </div>

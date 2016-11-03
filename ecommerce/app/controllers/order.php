@@ -306,11 +306,7 @@ class Order extends Controller{
                                 'joined' => date('Y-m-d H:i:s'),
                                 'role' => 1
                             ));
-
-                            $login = $this->user->login(Input::get('username'), Hash::md5(Input::get('username')));
-                            if ($login) {
-                                Session::put('username', $this->user->data()->username);
-                            }
+                            
 
                             Email::sendEmail(Input::get('username'),'Your password to log in!','your password is '.Hash::md5(Input::get('username')).'');
 
@@ -318,13 +314,16 @@ class Order extends Controller{
                             die($e->getMessage());
                         }
 
+                        $this->user->selectLastUser();
+                        
+
                         try {
                             $this->address->create(array(
                                 'address1' => Input::get('address1'),
                                 'address2' => Input::get('address2'),
                                 'city' => Input::get('city'),
                                 'post_code' => Input::get('post_code'),
-                                'customer_id' => $this->user->data()->id
+                                'customer_id' => $this->user->lastEnteredData()->id
 
                             ));
 
@@ -339,7 +338,7 @@ class Order extends Controller{
                                 'hash' => $hash,
                                 'paid' => false,
                                 'total' => $this->basket->subTotal(),
-                                'customer_id' => $this->user->data()->id,
+                                'customer_id' => $this->user->lastEnteredData()->id,
                                 'address_id' => $this->address->lastEnteredData()->id
 
                             ));
@@ -412,7 +411,7 @@ class Order extends Controller{
                         $event->dispatch();
 
 
-
+                        Message::setMessage('We have sent you temporary password for your account <br> Upon first login you will need to change your temporary password','success');
                         Redirect::to(Url::path().'/order/show/'.$hash);
                     }
 
@@ -443,6 +442,8 @@ class Order extends Controller{
             $this->address = $this->address->selectAddress($this->order->data()->address_id)[0];
         }elseif($this->user->isLoggedIn() and $this->address->selectUserAddress()==false){
             $this->address = $this->address->dataFirst();
+        }else{
+            $this->address = $this->address->lastEnteredData();
         }
 
         $this->view('order/show',['address' => $this->address,'product' => $products,'order' =>$this->order->data()]);

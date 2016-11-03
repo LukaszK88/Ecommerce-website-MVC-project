@@ -63,22 +63,9 @@ class Main extends Controller{
                         die($e->getMessage());
                     }
 
-                    $remember = (Input::get('remember') === 'on') ? true : false;
-                    $login = $user->login(Input::get('username'), Hash::md5(Input::get('username')), $remember);
+                    Message::setMessage('We have sent you temporary password , check your inbox <br> Upon first login you will need to set new password','success');
+                    Redirect::to(Url::path().'/main/index');
 
-                    if ($login) {
-                        Session::put('username',$user->data()->username);
-                        if ($user->data()->temp_password === Hash::md5(Input::get('username'))) {
-                            Message::setMessage('You have logged in for the first time, change your password','success') ;
-                            Redirect::to(Url::path().'/main/settings');
-
-                        } else {
-                            Session::flash('success', 'You are logged in!');
-                            Redirect::to(Url::path().'/main/index');
-                        }
-                    } else {
-                        Message::setMessage('Sorry we couldn\'t log you in','error') ;
-                    }
 
                 } 
             }
@@ -111,7 +98,7 @@ class Main extends Controller{
                         Session::put('username',$user->data()->username);
                         if($user->data()->temp_password === Hash::md5(Input::get('username'))){
                             Message::setMessage('You have logged in for the first time, change your password','success') ;
-                            Redirect::to(Url::path().'/main/update');
+                            Redirect::to(Url::path().'/main/settings');
 
                         }else{
                             Redirect::to(Url::path().'/main/index');
@@ -131,50 +118,93 @@ class Main extends Controller{
         if(!$user->isLoggedIn()){
             Redirect::to('index.php');
         }
-        if(Input::exists()){
-            if(Token::check(Input::get('token'))){
+        if(empty($this->user->data()->temp_password)) {
+            if (Input::exists()) {
+                if (Token::check(Input::get('token'))) {
 
-                $validate = new Validation();
-                $validation = $validate->check($_POST,array(
-                    'password_current'=>array(
-                        'required'=> true,
-                        'min'=> 6
-                    ),
-                    'new_password'=>array(
-                        'required'=> true,
-                        'min'=> 6
-                    ),
-                    'new_password_again'=>array(
-                        'required'=> true,
-                        'min'=> 6,
-                        'matches'=>'new_password'
-                    )
-                ));
-                if($validation->passed()) {
+                    $validate = new Validation();
+                    $validation = $validate->check($_POST, array(
+                        'password_current' => array(
+                            'required' => true,
+                            'min' => 6
+                        ),
+                        'new_password' => array(
+                            'required' => true,
+                            'min' => 6
+                        ),
+                        'new_password_again' => array(
+                            'required' => true,
+                            'min' => 6,
+                            'matches' => 'new_password'
+                        )
+                    ));
+                    if ($validation->passed()) {
 
-                    if (((Input::get('password_current')) === ($user->data()->temp_password))){
 
-                        try {
-                            $salt= Hash::salt(32);
-                            $user->update(array(
-                                'name' => Input::get('name'),
-                                'password' => Hash::make(Input::get('new_password'),$salt),
-                                'salt' => $salt,
-                                'temp_password' => ''
-                            ));
 
-                            Message::setMessage('You have updated your details!','success' );
-                            Redirect::to(Url::path().'/main/index');
+                        if ((Hash::make(Input::get('password_current'), $this->user->data()->salt)) === ($this->user->data()->password)) {
 
-                        } catch (Exception $e) {
-                            die($e->getMessage());
+
+                            try {
+                                $salt = Hash::salt(32);
+                                $user->update(array(
+                                    'name' => Input::get('name'),
+                                    'password' => Hash::make(Input::get('new_password'), $salt),
+                                    'salt' => $salt,
+                                    'temp_password' => ''
+                                ));
+
+                                Message::setMessage('You have updated your password!', 'success');
+                                Redirect::to(Url::path() . '/main/index');
+
+                            } catch (Exception $e) {
+                                die($e->getMessage());
+                            }
+
+                        } else {
+                            Message::setMessage('Invalid Password', 'error');
                         }
-
-                    }else{
-                        Message::setMessage('Invalid Password','error');
                     }
                 }
             }
+        }else{
+            if (Input::exists()) {
+                if (Token::check(Input::get('token'))) {
+
+                    $validate = new Validation();
+                    $validation = $validate->check($_POST, array(
+                        'new_password' => array(
+                            'required' => true,
+                            'min' => 6
+                        ),
+                        'new_password_again' => array(
+                            'required' => true,
+                            'min' => 6,
+                            'matches' => 'new_password'
+                        )
+                    ));
+                    if ($validation->passed()) {
+
+
+                            try {
+                                $salt = Hash::salt(32);
+                                $user->update(array(
+                                    'password' => Hash::make(Input::get('new_password'), $salt),
+                                    'salt' => $salt,
+                                    'temp_password' => ''
+                                ));
+
+                                Message::setMessage('You have updated your password!', 'success');
+                                Redirect::to(Url::path() . '/main/index');
+
+                            } catch (Exception $e) {
+                                die($e->getMessage());
+                            }
+
+                    }
+                }
+            }
+
         }
 
         $this->view('main/settings',['user'=>$user->data()]);

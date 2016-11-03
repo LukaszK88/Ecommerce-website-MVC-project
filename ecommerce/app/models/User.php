@@ -4,6 +4,7 @@ class User extends Model{
 
     protected $_db,
         $_data,
+        $lastEnteredData,
         $_time,
         $_sessionName,
         $_cookieName,
@@ -130,6 +131,17 @@ class User extends Model{
         }
         return false;
     }
+
+    public function selectLastUser(){
+        $user = $this->_db->get('users',array('id','>',0));
+        if($user->count()){
+
+            $result = $user->results();
+            $this->lastEnteredData = end($result);
+
+            return true;
+        }
+    }
     
     public function findUserById($customerId){
         $result = $this->_db->get('users',array('id','=',$customerId));
@@ -139,6 +151,10 @@ class User extends Model{
 
     public function exists(){
         return(!empty($this->_data)) ?true : false;
+    }
+
+    public function lastEnteredData(){
+        return $this->lastEnteredData;
     }
 
     public function data(){

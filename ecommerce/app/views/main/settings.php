@@ -14,10 +14,12 @@
                     Validation::displayErrors();
                     ?>
                 <form action="" method="POST">
+                    <?php if(empty($data['user']->temp_password)) :?>
                         <div class="form-group">
                             <label for="password_current">Current Password:</label><br>
-                            <input type="password"  id="password_current" name="password_current" placeholder="Current Password" value="<?php echo !empty($data['user']->temp_password) ? $data['user']->temp_password : Input::get('password_current'); ?>">
+                            <input type="password"  id="password_current" name="password_current" placeholder="Current Password" value="">
                         </div>
+                    <?php endif; ?>
                         <div class="form-group">
                             <label for="new_password">New Password:</label><br>
                             <input type="password"  id="new_password" name="new_password" placeholder="New Password" value="">
