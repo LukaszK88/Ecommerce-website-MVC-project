@@ -164,4 +164,81 @@ class Product extends Controller{
         }
         $this->view('product/delete');
     }
+
+    public function enquiry($slug = ''){
+
+        $product = $this->products->compareSlug($slug);
+    if(!empty($this->user->data()->name) and !empty($this->user->data()->username)) {
+        if (Input::exists()) {
+            if (Token::check(Input::get('token'))) {
+                $validate = new Validation();
+                $validation = $validate->check($_POST, array(
+                    'item' => array(
+                        'required' => true,
+                        'min' => 4,
+                        'max' => 100,
+                    ),
+                    'message' => array(
+                        'required' => true,
+                        'min' => 5,
+                        'max' => 500,
+                    )
+                ));
+                if ($validation->passed()) {
+
+                    Email::sendEmail('lukaskowalpl@yahoo.co.uk','Item enquiry from '.$this->user->data()->name.'<br>
+                     message regarding item '.Input::get('item').'','Sender Email : '.$this->user->data()->username.' <br>
+                     Message: '.Input::get('message').'');
+
+                    Message::setMessage('Enquiry sent. We will get bask to you ASAP', 'success');
+                    Redirect::to(Url::path() . '/product/' . $product->slug);
+
+
+                }
+            }
+        }
+    }else{
+        if (Input::exists()) {
+            if (Token::check(Input::get('token'))) {
+                $validate = new Validation();
+                $validation = $validate->check($_POST, array(
+                    'name' => array(
+                        'required' => true,
+                        'min' => 4,
+                        'max' => 100,
+                    ),
+                    'email' => array(
+                        'required' => true,
+                        'email' => true,
+                        'min' => 4,
+                        'max' => 100,
+                    ),
+                    'item' => array(
+                        'required' => true,
+                        'min' => 4,
+                        'max' => 100,
+                    ),
+                    'message' => array(
+                        'required' => true,
+                        'min' => 5,
+                        'max' => 500,
+                    )
+                ));
+                if ($validation->passed()) {
+
+                    Email::sendEmail('lukaskowalpl@yahoo.co.uk','Item enquiry from '.Input::get('name').'<br>
+                     message regarding item '.Input::get('item').'','Sender Email : '.Input::get('email').' <br>
+                     Message: '.Input::get('message').'');
+
+                    Message::setMessage('Enquiry sent. We will get bask to you ASAP', 'success');
+                    Redirect::to(Url::path() . '/product/' . $product->slug);
+
+
+                }
+            }
+        }
+    }
+        
+        $this->view('product/enquiry',['product'=>$product,'user'=>$this->user]);
+    }
 }

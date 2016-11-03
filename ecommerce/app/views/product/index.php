@@ -18,7 +18,7 @@
                 <div class="caption-full">
 
                     <?php if($data['products']->outOfStock()) :?>
-                    <span class="label label-danger"> Made to Order</span>
+                    <span class="label label-danger"> Out of stock</span>
 
                         <?php if($data['user']->isLoggedIn() and $data['user']->hasPermission('admin')): ?>
                             <form action="" method="post" class="form-inline">
@@ -58,7 +58,11 @@
                     </h4>
 
                     <p><?php echo $data['product']->description ?></p>
-                    <a href="<?php echo Url::path() ?>/cart/add/<?php echo $data['product']->slug?>/1" class="btn btn-success btn-sm">Add to cart</a>
+                    <?php if($data['products']->inStock()) :?>
+                        <a href="<?php echo Url::path() ?>/cart/add/<?php echo $data['product']->slug?>/1" class="btn btn-success btn-sm">Add to cart</a>
+                        <?php elseif($data['products']->outOfStock()) : ?>
+                        <a href="<?php echo Url::path() ?>/product/enquiry/<?php echo $data['product']->slug?>" class="btn btn-success btn-sm">Item enquiry</a>
+                    <?php endif;?>
                 </div>
                 <div class="ratings">
                     <p class="pull-right">
@@ -86,7 +90,7 @@
                 <?php if ($data['products']->countReviews($data['product']->id) == false) : ?>
                 <div class="row">
                     <div class="col-md-12">
-                        <p>There is no reviews for this item yet, be the First!</p>
+                        <p>There is no reviews for this item yet, be the first!</p>
                     </div>
                 </div>
                 <?php else : ?>
