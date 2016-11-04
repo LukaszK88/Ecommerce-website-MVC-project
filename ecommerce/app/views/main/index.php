@@ -5,7 +5,7 @@
         <div class="col-md-12 text-center ">
 
             <?php Message::displayMessage();?>
-            <div class="jumbotron">
+            <div class="jumbotron theme">
                 
                 <p class="lead">"Si vis pacem, para bellum"<br>
                  "If you want peace, prepare for war"</p>
@@ -16,14 +16,14 @@
 
     <div class="row text-center">
 
-        <div class="col-md-3 col-sm-6 hero-feature">
+        <div class="col-md-3 col-sm-6 hero-feature ">
             <div class="thumbnail">
 
 
                 <a href="<?php echo Url::path()?>/categories/Shields"><img src="<?php echo $data['shields'][0]->image ?>" alt=""></a>
 
 
-                <div class="caption">
+                <div class="caption theme">
                     <h3>Shields</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     <p>
@@ -36,7 +36,7 @@
         <div class="col-md-3 col-sm-6 hero-feature">
             <div class="thumbnail">
                 <a href="<?php echo Url::path()?>/categories/Armours"><img src="<?php echo $data['armours'][0]->image ?>" alt=""></a>
-                <div class="caption">
+                <div class="caption theme">
                     <h3>Armour</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     <p>
@@ -49,7 +49,7 @@
         <div class="col-md-3 col-sm-6 hero-feature">
             <div class="thumbnail">
                 <a href="<?php echo Url::path()?>/categories/Paddings"><img src="<?php echo $data['paddings'][0]->image ?>" alt=""></a>
-                <div class="caption">
+                <div class="caption theme">
                     <h3>Paddings</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     <p>
@@ -61,12 +61,12 @@
 
         <div class="col-md-3 col-sm-6 hero-feature">
             <div class="thumbnail">
-                <a href="<?php echo Url::path()?>/categories/Other"><img src="<?php echo $data['others'][0]->image ?>" alt=""></a>
-                <div class="caption">
+                <a href="<?php echo Url::path()?>/categories/Others"><img src="<?php echo $data['others'][0]->image ?>" alt=""></a>
+                <div class="caption theme">
                     <h3>Other</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                     <p>
-                        <a href="<?php echo Url::path()?>/categories/Other" class="btn btn-success">Shop Now!</a>
+                        <a href="<?php echo Url::path()?>/categories/Others" class="btn btn-success">Shop Now!</a>
                     </p>
                 </div>
             </div>

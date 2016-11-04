@@ -13,7 +13,7 @@
         </div>
     </div>
             <div class="row">
-                <div class="col-lg-4 col-lg-offset-4 text-center well">
+                <div class="col-lg-4 col-lg-offset-4 text-center well theme">
         <?php Validation::displayErrors(); ?>
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
@@ -95,7 +95,7 @@
 
                 <div class="form-group">
                     <label for="image">Item Photo path*:</label><br>
-                    <input type="text" class="form-control"  name="image" placeholder="http://www.lukasz-pt.com/public/images/" value="<?php echo !empty($data['productId']) ? $data['product'][0]->image : Input::get('image'); ?>" >
+                    <input type="text" class="form-control"  name="image" placeholder="http://www.lukasz-pt.com/public/images/" value="<?php echo !empty($data['productId']) ? $data['product'][0]->image : 'http://www.lukasz-pt.com/public/images/'; ?>" >
                 </div>
                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
                 <button type="submit" name="submit" class="btn btn-success"><?php echo !empty($data['productId']) ? 'Update Product' :'Add Product' ;?></button><br><br>

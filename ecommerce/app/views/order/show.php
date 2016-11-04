@@ -7,7 +7,7 @@
  */?>
 <div class="container">
     <div class="row">
-        <div class="col-md-12 well">
+        <div class="col-md-12 well theme">
             <?php Message::displayMessage(); ?>
                 <h3>Order#<?php echo $data['order']->id ?></h3>
                 <hr>

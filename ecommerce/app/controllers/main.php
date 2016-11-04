@@ -520,7 +520,7 @@ class Main extends Controller{
                 $validation = $validate->check($_POST, array(
                     'name' => array(
                         'required' => true,
-                        'min' => 4,
+                        'min' => 3,
                         'max' => 60,
                     ),
                     'last_name' => array(
@@ -598,7 +598,7 @@ class Main extends Controller{
                     'name' => array(
                         'required' => true,
                         //'email' => true,
-                        'min' => 4,
+                        'min' => 3,
                         'max' => 60,
                     ),
                 ));

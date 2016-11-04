@@ -14,8 +14,8 @@
             <?php Message::displayMessage();
                     Validation::displayErrors();
             ;?>
-            <div class="thumbnail">
-                <div class="caption-full">
+            <div class="thumbnail theme">
+                <div class="caption-full ">
 
                     <?php if($data['products']->outOfStock()) :?>
                     <span class="label label-danger"> Out of stock</span>
@@ -69,18 +69,24 @@
                     <p class="pull-right">
                         <?php if(!empty($data['products']->countReviews($data['product']->id))):?>
                         <?php echo $data['products']->countReviews($data['product']->id).' reviews' ?>
-                        <?php else:?>
-                        <?php echo 'no reviews'?>
-                        </p>
-                        <?php endif; ?>
                     <p>
                         <span class="glyphicon glyphicon-star"></span>
-                       <?php echo $data['avgRating'] ?>
+                        <?php echo $data['avgRating'] ?> / 5
                     </p>
+
+
+                        <?php else:?>
+                              no reviews
+                        </p>
+
+                            <p>
+                                <span class="glyphicon glyphicon-star"></span>
+                            </p>
+                        <?php endif; ?>
                 </div>
             </div>
 
-            <div class="well">
+            <div class="well theme">
 
                 <div class="text-right">
                     <a href="<?php echo Url::path() ?>/product/review/<?php echo $data['product']->slug?>" class="btn btn-default">Leave a Review</a>

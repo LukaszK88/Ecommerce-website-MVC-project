@@ -21,9 +21,9 @@
 
             <?php foreach ($data['product'] as $product):?>
                 <div class="col-sm-3 col-lg-3 col-md-3">
-                    <div class="thumbnail">
+                    <div class="thumbnail theme">
                         <a href="<?php echo Url::path()?>/product/<?php echo $product->slug ?>"><img src="<?php echo $product->image ?>" alt=""></a>
-                        <div class="caption">
+                        <div class="caption ">
 
                             <h4 class="pull-right">£ <?php echo $product->price ?></h4><br>
                             <h4><a href="<?php echo Url::path()?>/product/<?php echo $product->slug ?>"><?php echo $product->title ?></a>
@@ -31,11 +31,18 @@
                             <p><?php echo $product->description ?></p>
                         </div>
                         <div class="ratings">
+                            <?php if(empty($data['review']->countReviews($product->id))) : ?>
+                                <p class="pull-right"> no reviews</p>
+                                <p>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                </p>
+                            <?php else:?>
                             <p class="pull-right"><?php echo $data['review']->countReviews($product->id) ?> reviews</p>
                             <p>
                                 <span class="glyphicon glyphicon-star"></span>
-                                <?php echo number_format($data['review']->getAverageRating($product->id)->ratingAvg,1,'.','');?>
+                                <?php echo number_format($data['review']->getAverageRating($product->id)->ratingAvg,1,'.','');?> / 5
                             </p>
+                            <?php endif;?>
                         </div>
                         <?php if($data['user']->isLoggedIn() and $data['user']->hasPermission('admin')): ?>
                         <a href="<?php echo Url::path()?>/categories/delete/<?php echo $product->id ?>/<?php echo $product->category_slug ?>" class="btn btn-danger btn-sm">Delete</a>

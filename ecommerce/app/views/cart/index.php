@@ -10,7 +10,7 @@
     <div class="row">
         <?php if($basket->itemCount()):?>
             <div class="col-md-8">
-                <div class="well">
+                <div class="well theme">
                     <table class="table">
                         <thead>
                             <tr>

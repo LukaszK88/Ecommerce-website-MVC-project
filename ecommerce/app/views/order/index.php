@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-12">
             <?php if($data['address']->userAndAddressExists()) :?>
-            <div class="col-md-8 well ">
+            <div class="col-md-8 well theme ">
                 <form action="<?php echo Url::path()?>/order/index" method="post">
                 <?php Validation::displayErrors(); ?>
                 <div class="row">
@@ -74,7 +74,7 @@
         </form>
             <?php elseif($data['address']->userExistsAndNoAddress()): ?>
                 <form action="<?php echo Url::path()?>/order/index" method="post">
-            <div class="col-md-8 well">
+            <div class="col-md-8 well theme">
                 <?php Validation::displayErrors(); ?>
                 <div class="row">
                     <div class="col-md-6">
@@ -144,7 +144,7 @@
 
             <?php else: ?>
             <form action="<?php echo Url::path()?>/order/index" method="post">
-                <div class="col-md-8 well">
+                <div class="col-md-8 well theme">
                     <?php Validation::displayErrors(); ?>
                     <div class="row">
                         <div class="col-md-6">

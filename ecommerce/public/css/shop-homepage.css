@@ -16,6 +16,22 @@ body {
     padding-top: 0px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
+a{
+    color: black;
+}
+
+.form-control{
+    border-color: black;
+}
+
+hr{
+    border-color: black;
+}
+
+.theme{
+    background-color: #cccccc;
+}
+
 ul.nav a:hover {
     background-color: gray !important;
     color: white !important;

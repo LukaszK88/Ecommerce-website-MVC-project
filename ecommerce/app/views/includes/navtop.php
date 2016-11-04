@@ -2,7 +2,7 @@
 
 
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top " role="navigation">
+<nav class="navbar navbar-default navbar-static-top theme" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -18,7 +18,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a class="dropdown-toggle"  data-toggle="dropdown">Shields <span class="glyphicon glyphicon-triangle-bottom small"></span></a>
+                    <a class="dropdown-toggle"  data-toggle="dropdown">Shields <i class="glyphicon glyphicon-triangle-bottom small"></i></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
                             <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/western-shields">West</a></li>
@@ -29,10 +29,10 @@
 
 
                     <li class="dropdown">
-                        <a class="dropdown-toggle"  data-toggle="dropdown">Armour <span class="glyphicon glyphicon-triangle-bottom small"></span></a>
+                        <a class="dropdown-toggle"  data-toggle="dropdown">Armour <i class="glyphicon glyphicon-triangle-bottom small"></i></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
-                                    <a class="test" tabindex="-1" href="#">1v1 <span class="glyphicon glyphicon-triangle-right small"></span></a>
+                                    <a class="test" tabindex="-1" href="#">1v1 <i class="glyphicon glyphicon-triangle-right small"></i></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="<?php echo Url::path() ?>/categories/1v1-head">Head</a></li>
                                         <li><a href="<?php echo Url::path() ?>/categories/1v1-upperbody">Upper Body</a></li>
@@ -40,7 +40,7 @@
                                     </ul>
                                 </li>
                                 <li class="dropdown-submenu">
-                                    <a class="test" tabindex="-1" href="#">Bohurt <span class="glyphicon glyphicon-triangle-right small"></span></a>
+                                    <a class="test" tabindex="-1" href="#">Bohurt <i class="glyphicon glyphicon-triangle-right small"></i></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="<?php echo Url::path() ?>/categories/bohurt-lowerbody">Head</a></li>
                                         <li><a href="<?php echo Url::path() ?>/categories/bohurt-upperbody">Upper Body</a></li>
@@ -51,7 +51,7 @@
                     </li>
 
                 <li class="dropdown">
-                    <a class="dropdown-toggle"  data-toggle="dropdown">Paddings <span class="glyphicon glyphicon-triangle-bottom small"></span></a>
+                    <a class="dropdown-toggle"  data-toggle="dropdown">Paddings <i class="glyphicon glyphicon-triangle-bottom small"></i></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
                                 <li><a tabindex="-1" href="<?php echo Url::path() ?>/categories/paddings-head">Head</a></li>

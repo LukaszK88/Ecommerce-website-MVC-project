@@ -272,7 +272,7 @@ class Order extends Controller{
                         ),
                         'name' => array(
                             'required' => true,
-                            'min' => 4,
+                            'min' => 3,
                             'max' => 50,
                         ),
                         'address1' => array(
